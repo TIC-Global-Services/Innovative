@@ -20,7 +20,7 @@ export async function POST(req: Request) {
   try {
     // Parse multipart form data
     const formData = await req.formData();
-    
+
     // Extract form fields
     const name = formData.get('name') as string;
     const email = formData.get('email') as string;
@@ -85,20 +85,20 @@ export async function POST(req: Request) {
     // Upload file to Google Drive
     let resumeUrl = '';
     let resumeFileId = '';
-    
+
     try {
       // Convert File to Buffer
       const fileBuffer = Buffer.from(await resumeFile.arrayBuffer());
-      
+
       // Generate unique filename
       const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
       const sanitizedName = name.replace(/[^a-zA-Z0-9]/g, '_');
       const fileExtension = resumeFile.name.split('.').pop() || 'pdf';
       const fileName = `Resume_${sanitizedName}_${timestamp}.${fileExtension}`;
-      
+
       // Create readable stream from buffer
       const fileStream = bufferToStream(fileBuffer);
-      
+
       // Upload to Google Drive
       const driveResponse = await drive.files.create({
         requestBody: {
@@ -114,7 +114,7 @@ export async function POST(req: Request) {
       });
 
       resumeFileId = driveResponse.data.id || '';
-      
+
       if (resumeFileId) {
         // Set permissions to view (not edit)
         await drive.permissions.create({
@@ -124,12 +124,12 @@ export async function POST(req: Request) {
             type: 'anyone',
           },
         });
-        
+
         // Get the webViewLink if available, or construct the URL
-        resumeUrl = driveResponse.data.webViewLink || 
-                    `https://drive.google.com/file/d/${resumeFileId}/view`;
+        resumeUrl = driveResponse.data.webViewLink ||
+          `https://drive.google.com/file/d/${resumeFileId}/view`;
       }
-      
+
       console.log(`File uploaded successfully: ${fileName} (ID: ${resumeFileId})`);
     } catch (uploadError) {
       console.error("File upload failed:", uploadError);
@@ -142,9 +142,9 @@ export async function POST(req: Request) {
     // Generate timestamp
     const createdAt = new Date().toISOString();
 
-  
+
     const rowData = [
-   
+
       name,
       email,
       department,
@@ -180,7 +180,7 @@ export async function POST(req: Request) {
 
     } catch (sheetError) {
       console.error("Error writing to sheet:", sheetError);
-      
+
       // Attempt to delete the uploaded file if sheet update failed
       if (resumeFileId) {
         try {
@@ -190,7 +190,7 @@ export async function POST(req: Request) {
           console.error("Error deleting orphaned file:", deleteError);
         }
       }
-      
+
       return NextResponse.json({
         message: "Error saving application data",
         error: sheetError instanceof Error ? sheetError.message : "Unknown error"
@@ -245,7 +245,7 @@ export async function GET() {
       location: row[5] || '',
       message: row[6] || '',
       resumeUrl: row[7] || '',
-     
+
     }));
 
     return NextResponse.json({

@@ -695,40 +695,39 @@
 
 
 
+"use client";
 
-"use client"
-
-import type React from "react"
-import { useState } from "react"
-import { ArrowRight, Loader2, ChevronDown, Upload, X } from "lucide-react"
-import { toast } from 'react-toastify'
-import ArrowBtn from "../ui/arrowBtn"
+import type React from "react";
+import { useState } from "react";
+import { ArrowRight, Loader2, ChevronDown, Upload, X } from "lucide-react";
+import { toast } from "react-toastify";
+import ArrowBtn from "../ui/arrowBtn";
 
 interface FormErrors {
-  name?: string
-  email?: string
-  department?: string
-  experience?: string
-  location?: string
-  message?: string
-  cv?: string
+  name?: string;
+  email?: string;
+  department?: string;
+  experience?: string;
+  location?: string;
+  message?: string;
+  cv?: string;
 }
 
 interface FormData {
-  name: string
-  email: string
-  department: string
-  experience: string
-  location: string
-  message: string
-  cv: File | null
+  name: string;
+  email: string;
+  department: string;
+  experience: string;
+  location: string;
+  message: string;
+  cv: File | null;
 }
 
 type ApplyHereProps = {
-  title?: string
-  description?: string
-  className?: string
-}
+  title?: string;
+  description?: string;
+  className?: string;
+};
 
 const ApplyHere: React.FC<ApplyHereProps> = ({
   title = "Apply here!",
@@ -743,165 +742,186 @@ const ApplyHere: React.FC<ApplyHereProps> = ({
     location: "",
     message: "",
     cv: null,
-  })
+  });
 
-  const [errors, setErrors] = useState<FormErrors>({})
-  const [focusedInput, setFocusedInput] = useState<string | null>(null)
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [focusedInput, setFocusedInput] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Validation functions
   const validateName = (name: string): string | undefined => {
-    if (!name.trim()) return "Name is required"
-    if (name.trim().length < 2) return "Name must be at least 2 characters"
-    if (!/^[a-zA-Z\s]+$/.test(name.trim())) return "Name can only contain letters and spaces"
-    return undefined
-  }
+    if (!name.trim()) return "Name is required";
+    if (name.trim().length < 2) return "Name must be at least 2 characters";
+    if (!/^[a-zA-Z\s]+$/.test(name.trim()))
+      return "Name can only contain letters and spaces";
+    return undefined;
+  };
 
   const validateEmail = (email: string): string | undefined => {
-    if (!email.trim()) return "Email is required"
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(email.trim())) return "Please enter a valid email address"
-    return undefined
-  }
+    if (!email.trim()) return "Email is required";
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email.trim()))
+      return "Please enter a valid email address";
+    return undefined;
+  };
 
-  const validateSelect = (value: string, fieldName: string): string | undefined => {
-    if (!value) return `Please select ${fieldName}`
-    return undefined
-  }
+  const validateSelect = (
+    value: string,
+    fieldName: string
+  ): string | undefined => {
+    if (!value) return `Please select ${fieldName}`;
+    return undefined;
+  };
 
   const validateFile = (file: File | null): string | undefined => {
-    if (!file) return "cv is required"
-    
+    if (!file) return "CV is required";
+
     // Check file size (5MB limit)
-    const maxSize = 5 * 1024 * 1024 // 5MB in bytes
-    if (file.size > maxSize) return "File size must be less than 5MB"
-    
+    const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+    if (file.size > maxSize) return "File size must be less than 5MB";
+
     // Check file type
     const allowedTypes = [
-      'application/pdf',
-      'application/msword',
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-    ]
+      "application/pdf",
+      "application/msword",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    ];
     if (!allowedTypes.includes(file.type)) {
-      return "Only PDF, DOC, and DOCX files are allowed"
+      return "Only PDF, DOC, and DOCX files are allowed";
     }
-    
-    return undefined
-  }
 
-  const validateField = (field: string, value: string | File | null): string | undefined => {
+    return undefined;
+  };
+
+  const validateField = (
+    field: string,
+    value: string | File | null
+  ): string | undefined => {
     switch (field) {
-      case 'name':
-        return validateName(value as string)
-      case 'email':
-        return validateEmail(value as string)
-      case 'department':
-        return validateSelect(value as string, "department")
-      case 'experience':
-        return validateSelect(value as string, "experience level")
-      case 'location':
-        return validateSelect(value as string, "location")
-      case 'cv':
-        return validateFile(value as File | null)
+      case "name":
+        return validateName(value as string);
+      case "email":
+        return validateEmail(value as string);
+      case "department":
+        return validateSelect(value as string, "department");
+      case "experience":
+        return validateSelect(value as string, "experience level");
+      case "location":
+        return validateSelect(value as string, "location");
+      case "cv":
+        return validateFile(value as File | null);
       default:
-        return undefined
+        return undefined;
     }
-  }
+  };
 
   const validateAllFields = (): boolean => {
-    const newErrors: FormErrors = {}
-    let isValid = true
+    const newErrors: FormErrors = {};
+    let isValid = true;
 
     // Validate text fields
-    const textFields = ['name', 'email', 'department', 'experience', 'location']
-    textFields.forEach(field => {
-      const error = validateField(field, formData[field as keyof FormData] as string)
+    const textFields = [
+      "name",
+      "email",
+      "department",
+      "experience",
+      "location",
+    ];
+    textFields.forEach((field) => {
+      const error = validateField(
+        field,
+        formData[field as keyof FormData] as string
+      );
       if (error) {
-        newErrors[field as keyof FormErrors] = error
-        isValid = false
+        newErrors[field as keyof FormErrors] = error;
+        isValid = false;
       }
-    })
+    });
 
     // Validate file
-    const fileError = validateField('cv', formData.cv)
+    const fileError = validateField("cv", formData.cv);
     if (fileError) {
-      newErrors.cv = fileError
-      isValid = false
+      newErrors.cv = fileError;
+      isValid = false;
     }
 
-    setErrors(newErrors)
-    return isValid
-  }
+    setErrors(newErrors);
+    return isValid;
+  };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { id, value } = e.target
-    
-    setFormData(prev => ({ ...prev, [id]: value }))
-    
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { id, value } = e.target;
+
+    setFormData((prev) => ({ ...prev, [id]: value }));
+
     // Clear error when user starts typing
     if (errors[id as keyof FormErrors]) {
-      const error = validateField(id, value)
-      setErrors(prev => ({ ...prev, [id]: error }))
+      const error = validateField(id, value);
+      setErrors((prev) => ({ ...prev, [id]: error }));
     }
-  }
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0] || null
-    setFormData(prev => ({ ...prev, cv: file }))
-    
+    const file = e.target.files?.[0] || null;
+    setFormData((prev) => ({ ...prev, cv: file }));
+
     // Clear error and validate file
-    const error = validateFile(file)
-    setErrors(prev => ({ ...prev, cv: error }))
-  }
+    const error = validateFile(file);
+    setErrors((prev) => ({ ...prev, cv: error }));
+  };
 
   const handleFocus = (field: string) => {
-    setFocusedInput(field)
-  }
+    setFocusedInput(field);
+  };
 
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { id, value } = e.target
-    setFocusedInput(null)
-    
+  const handleBlur = (
+    e: React.FocusEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { id, value } = e.target;
+    setFocusedInput(null);
+
     // Validate field on blur (except file)
-    if (id !== 'cv') {
-      const error = validateField(id, value)
-      setErrors(prev => ({ ...prev, [id]: error }))
+    if (id !== "cv") {
+      const error = validateField(id, value);
+      setErrors((prev) => ({ ...prev, [id]: error }));
     }
-  }
+  };
 
   const removeFile = () => {
-    setFormData(prev => ({ ...prev, cv: null }))
-    setErrors(prev => ({ ...prev, cv: "cv is required" }))
-  }
+    setFormData((prev) => ({ ...prev, cv: null }));
+    setErrors((prev) => ({ ...prev, cv: "CV is required" }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    
-    // Validate all fields before submission
+    e.preventDefault();
+
     if (!validateAllFields()) {
-      toast.error('Please fix the errors in the form before submitting.', {
+      toast.error("Please fix the errors in the form before submitting.", {
         position: "top-right",
         autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      })
-      return
+      });
+      return;
     }
-  
-    setIsSubmitting(true)
-    
+
+    setIsSubmitting(true);
+
     try {
-      let resumeData = '';
+      // Convert CV to base64
+      let resumeData = "";
       if (formData.cv) {
-        const reader = new FileReader();
-        resumeData = await new Promise((resolve) => {
+        resumeData = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
           reader.onload = () => resolve(reader.result as string);
+          reader.onerror = reject;
           reader.readAsDataURL(formData.cv!);
         });
       }
-  
 
       const jsonData = {
         name: formData.name.trim(),
@@ -911,70 +931,59 @@ const ApplyHere: React.FC<ApplyHereProps> = ({
         location: formData.location,
         message: formData.message.trim(),
         resume: resumeData,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
-  
-      console.log('Submitting career application...')
-  
-      const response = await fetch('https://script.google.com/macros/s/AKfycbyB2xSx5noKGNuyGa7HUuF2MvKGgGxtKwRveVpvcILnbBTjtsFsnpwFwn6XalocwRQDMg/exec', {
-        method: 'POST',
+
+      console.log("Submitting career application...");
+
+      const APPS_SCRIPT_URL =
+        "https://script.google.com/macros/s/AKfycbx_cyKOUrgwIdWedr_XFCJml4CRsCidTyHJ_98EtKYhHvEJLVHi4AU9u-LtHGScE0Z3/exec";
+
+      await fetch(APPS_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "text/plain",
+        },
         body: JSON.stringify(jsonData),
-      })
-  
-      const result = await response.json()
-      
-      if (response.ok && result.status === 'success') {
-        console.log('Career application successful:', result)
-        toast.success('Application submitted successfully! We will get back to you soon.', {
+      });
+
+     
+      console.log("Career application submitted");
+      toast.success(
+        "Application submitted successfully! We will get back to you soon.",
+        {
           position: "top-right",
           autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        })
-  
-        setTimeout(() => {
-          window.location.href = '/' 
-        }, 2000)
-        
-        // Reset form
-        setFormData({
-          name: "",
-          email: "",
-          department: "",
-          experience: "",
-          location: "",
-          message: "",
-          cv: null,
-        })
-        setErrors({})
-        
-      } else {
-        console.error('Application failed:', result)
-        toast.error(result.message || 'Failed to submit application. Please try again.', {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        })
-      }
+        }
+      );
+
+      // Reset form
+      setFormData({
+        name: "",
+        email: "",
+        department: "",
+        experience: "",
+        location: "",
+        message: "",
+        cv: null,
+      });
+      setErrors({});
+
+
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 2000);
     } catch (error) {
-      console.error('Application error:', error)
-      toast.error('Error submitting application. Please check your files and try again.', {
+      console.error("Application error:", error);
+      toast.error("Error submitting application. Please try again.", {
         position: "top-right",
         autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      })
+      });
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   return (
     <div className={`relative md:min-h-[130vh] h-[115vh] mt-30 ${className}`}>
@@ -985,7 +994,7 @@ const ApplyHere: React.FC<ApplyHereProps> = ({
       <div className="container mx-auto px-4 md:px-6 lg:px-8 relative z-10 pt-10 pb-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Left Content - Header Section */}
-          <div className="flex flex-col items-center md:-mt-30 md:self-center self-start  justify-center lg:sticky lg:top-10">
+          <div className="flex flex-col items-center md:-mt-30 md:self-center self-start justify-center lg:sticky lg:top-10">
             <h1 className="text-[#040444] text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[118px] font-semibold mb-4 leading-tight md:leading-[1.1]">
               {title}
             </h1>
@@ -1005,8 +1014,12 @@ const ApplyHere: React.FC<ApplyHereProps> = ({
                   <div className="flex flex-col items-center gap-4">
                     <Loader2 className="w-8 h-8 animate-spin text-[#040444]" />
                     <div className="text-center">
-                      <p className="text-[#040444] font-semibold text-lg">Submit</p>
-                      <p className="text-gray-600 text-sm">Please wait while we process your application...</p>
+                      <p className="text-[#040444] font-semibold text-lg">
+                        Submitting...
+                      </p>
+                      <p className="text-gray-600 text-sm">
+                        Please wait while we process your application...
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -1023,15 +1036,17 @@ const ApplyHere: React.FC<ApplyHereProps> = ({
                     onFocus={() => handleFocus("name")}
                     onBlur={handleBlur}
                     className={`w-full h-12 md:h-14 rounded-lg px-4 bg-[#F7F8FA] text-sm md:text-base text-gray-700 placeholder-gray-400 focus:outline-none transition-all ${
-                      errors.name 
-                        ? 'border-2 border-red-500 focus:ring-2 focus:ring-red-200' 
-                        : 'focus:ring-2 focus:ring-[#040444]/20'
+                      errors.name
+                        ? "border-2 border-red-500 focus:ring-2 focus:ring-red-200"
+                        : "focus:ring-2 focus:ring-[#040444]/20"
                     }`}
                     placeholder="Your full name*"
                     disabled={isSubmitting}
                   />
                   {errors.name && (
-                    <p className="text-red-500 text-xs mt-1 ml-1">{errors.name}</p>
+                    <p className="text-red-500 text-xs mt-1 ml-1">
+                      {errors.name}
+                    </p>
                   )}
                 </div>
 
@@ -1045,15 +1060,17 @@ const ApplyHere: React.FC<ApplyHereProps> = ({
                     onFocus={() => handleFocus("email")}
                     onBlur={handleBlur}
                     className={`w-full h-12 md:h-14 rounded-lg px-4 bg-[#F7F8FA] text-sm md:text-base text-gray-700 placeholder-gray-400 focus:outline-none transition-all ${
-                      errors.email 
-                        ? 'border-2 border-red-500 focus:ring-2 focus:ring-red-200' 
-                        : 'focus:ring-2 focus:ring-[#040444]/20'
+                      errors.email
+                        ? "border-2 border-red-500 focus:ring-2 focus:ring-red-200"
+                        : "focus:ring-2 focus:ring-[#040444]/20"
                     }`}
                     placeholder="email@example.com*"
                     disabled={isSubmitting}
                   />
                   {errors.email && (
-                    <p className="text-red-500 text-xs mt-1 ml-1">{errors.email}</p>
+                    <p className="text-red-500 text-xs mt-1 ml-1">
+                      {errors.email}
+                    </p>
                   )}
                 </div>
 
@@ -1066,9 +1083,9 @@ const ApplyHere: React.FC<ApplyHereProps> = ({
                     onFocus={() => handleFocus("department")}
                     onBlur={handleBlur}
                     className={`w-full h-12 md:h-14 rounded-lg px-4 bg-[#F7F8FA] text-sm md:text-base text-gray-700 focus:outline-none transition-all appearance-none ${
-                      errors.department 
-                        ? 'border-2 border-red-500 focus:ring-2 focus:ring-red-200' 
-                        : 'focus:ring-2 focus:ring-[#040444]/20'
+                      errors.department
+                        ? "border-2 border-red-500 focus:ring-2 focus:ring-red-200"
+                        : "focus:ring-2 focus:ring-[#040444]/20"
                     }`}
                     disabled={isSubmitting}
                   >
@@ -1078,7 +1095,9 @@ const ApplyHere: React.FC<ApplyHereProps> = ({
                     <option value="Production">Production</option>
                     <option value="Purchase">Purchase</option>
                     <option value="Coordinators">Coordinators</option>
-                    <option value="Costing & estimation">Costing & Estimation</option>
+                    <option value="Costing & estimation">
+                      Costing & Estimation
+                    </option>
                     <option value="Accounts">Accounts</option>
                     <option value="HR">HR</option>
                     <option value="It">IT</option>
@@ -1087,11 +1106,15 @@ const ApplyHere: React.FC<ApplyHereProps> = ({
                   </select>
                   <ChevronDown
                     className={`absolute right-4 top-1/2 transform -translate-y-1/2 ${
-                      focusedInput === "department" ? "text-[#040444]" : "text-gray-400"
+                      focusedInput === "department"
+                        ? "text-[#040444]"
+                        : "text-gray-400"
                     } pointer-events-none w-5 h-5 transition-colors`}
                   />
                   {errors.department && (
-                    <p className="text-red-500 text-xs mt-1 ml-1">{errors.department}</p>
+                    <p className="text-red-500 text-xs mt-1 ml-1">
+                      {errors.department}
+                    </p>
                   )}
                 </div>
 
@@ -1104,9 +1127,9 @@ const ApplyHere: React.FC<ApplyHereProps> = ({
                     onFocus={() => handleFocus("experience")}
                     onBlur={handleBlur}
                     className={`w-full h-12 md:h-14 rounded-lg px-4 bg-[#F7F8FA] text-sm md:text-base text-gray-700 focus:outline-none transition-all appearance-none ${
-                      errors.experience 
-                        ? 'border-2 border-red-500 focus:ring-2 focus:ring-red-200' 
-                        : 'focus:ring-2 focus:ring-[#040444]/20'
+                      errors.experience
+                        ? "border-2 border-red-500 focus:ring-2 focus:ring-red-200"
+                        : "focus:ring-2 focus:ring-[#040444]/20"
                     }`}
                     disabled={isSubmitting}
                   >
@@ -1117,14 +1140,19 @@ const ApplyHere: React.FC<ApplyHereProps> = ({
                   </select>
                   <ChevronDown
                     className={`absolute right-4 top-1/2 transform -translate-y-1/2 ${
-                      focusedInput === "experience" ? "text-[#040444]" : "text-gray-400"
+                      focusedInput === "experience"
+                        ? "text-[#040444]"
+                        : "text-gray-400"
                     } pointer-events-none w-5 h-5 transition-colors`}
                   />
                   {errors.experience && (
-                    <p className="text-red-500 text-xs mt-1 ml-1">{errors.experience}</p>
+                    <p className="text-red-500 text-xs mt-1 ml-1">
+                      {errors.experience}
+                    </p>
                   )}
                 </div>
 
+                {/* Location Field */}
                 <div className="relative">
                   <input
                     id="location"
@@ -1133,15 +1161,17 @@ const ApplyHere: React.FC<ApplyHereProps> = ({
                     onFocus={() => handleFocus("location")}
                     onBlur={handleBlur}
                     className={`w-full h-12 md:h-14 rounded-lg px-4 bg-[#F7F8FA] text-sm md:text-base text-gray-700 placeholder-gray-400 focus:outline-none transition-all ${
-                      errors.location 
-                        ? 'border-2 border-red-500 focus:ring-2 focus:ring-red-200' 
-                        : 'focus:ring-2 focus:ring-[#040444]/20'
+                      errors.location
+                        ? "border-2 border-red-500 focus:ring-2 focus:ring-red-200"
+                        : "focus:ring-2 focus:ring-[#040444]/20"
                     }`}
                     placeholder="Current Location*"
                     disabled={isSubmitting}
                   />
                   {errors.location && (
-                    <p className="text-red-500 text-xs mt-1 ml-1">{errors.location}</p>
+                    <p className="text-red-500 text-xs mt-1 ml-1">
+                      {errors.location}
+                    </p>
                   )}
                 </div>
 
@@ -1162,13 +1192,15 @@ const ApplyHere: React.FC<ApplyHereProps> = ({
 
                 {/* File Upload Field */}
                 <div className="relative">
-                  <div className={`w-full min-h-[80px] rounded-lg border-2 border-dashed transition-all ${
-                    errors.cv 
-                      ? 'border-red-500 bg-red-50' 
-                      : formData.cv 
-                        ? 'border-green-500 bg-green-50' 
-                        : 'border-gray-300 bg-[#F7F8FA] hover:border-[#040444]'
-                  }`}>
+                  <div
+                    className={`w-full min-h-[80px] rounded-lg border-2 border-dashed transition-all ${
+                      errors.cv
+                        ? "border-red-500 bg-red-50"
+                        : formData.cv
+                        ? "border-green-500 bg-green-50"
+                        : "border-gray-300 bg-[#F7F8FA] hover:border-[#040444]"
+                    }`}
+                  >
                     <input
                       id="cv"
                       type="file"
@@ -1177,7 +1209,7 @@ const ApplyHere: React.FC<ApplyHereProps> = ({
                       className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                       disabled={isSubmitting}
                     />
-                    
+
                     <div className="flex flex-col items-center justify-center p-4 text-center pointer-events-none">
                       {formData.cv ? (
                         <div className="flex items-center gap-3 w-full">
@@ -1202,7 +1234,10 @@ const ApplyHere: React.FC<ApplyHereProps> = ({
                         <>
                           <Upload className="w-8 h-8 text-gray-400 mb-2" />
                           <p className="text-sm text-gray-600">
-                            <span className="font-medium text-[#040444]">Click to upload</span> your cv*
+                            <span className="font-medium text-[#040444]">
+                              Click to upload
+                            </span>{" "}
+                            your CV*
                           </p>
                           <p className="text-xs text-gray-500 mt-1">
                             PDF, DOC, DOCX (Max 5MB)
@@ -1212,25 +1247,26 @@ const ApplyHere: React.FC<ApplyHereProps> = ({
                     </div>
                   </div>
                   {errors.cv && (
-                    <p className="text-red-500 text-xs mt-1 ml-1">{errors.cv}</p>
+                    <p className="text-red-500 text-xs mt-1 ml-1">
+                      {errors.cv}
+                    </p>
                   )}
                 </div>
 
                 {/* Submit Button */}
-                <div className="pt-4  w-full">
-                <div className="flex flex-col items-center justify-center text-black gap-2">
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="disabled:opacity-50 disabled:cursor-not-allowed "
-              >
-                <ArrowBtn 
-                  text={isSubmitting ? "Submitting..." : "Submit"} 
-                  backgroundColor="#040444" 
-                />
-              </button>
-            
-            </div> 
+                <div className="pt-4 w-full">
+                  <div className="flex flex-col items-center justify-center text-black gap-2">
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <ArrowBtn
+                        text={isSubmitting ? "Submitting..." : "Submit"}
+                        backgroundColor="#040444"
+                      />
+                    </button>
+                  </div>
                 </div>
               </form>
             </div>
@@ -1238,7 +1274,7 @@ const ApplyHere: React.FC<ApplyHereProps> = ({
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ApplyHere
+export default ApplyHere;
