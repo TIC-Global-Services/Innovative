@@ -12,7 +12,7 @@ import MainLayout from "@/components/Layouts/MainLayout"
 const ManufacturingPage = () => {
   return (
     <MainLayout
-      heroVideo="/Manufacturer/manufacturing.mp4"
+      heroImage={ManufacturingBanner}
       heroText="Manufacturing Excellence At Innovative Interiors"
     >
       <div className="bg-white overflow-x-hidden">

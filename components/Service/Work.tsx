@@ -2,7 +2,8 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import Imagestair from "@/public/Rectangle 242.svg";
+// import Imagestair from "@/public/Rectangle 242.svg";
+import Imagestair from "@/public/Manufacturer/Commitment1.png";
 import SectionLabel from "../ui/secionLabel";
 
 const Work = () => {

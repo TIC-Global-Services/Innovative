@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { ExcellenceImage } from "../ReusableComponenets/Icons";
 import Image from "next/image";
 import { Volume2, VolumeX } from "lucide-react";
+import Commitment1 from "@/public/Manufacturer/Commitment1.png"
 
 const Excellence = () => {
   const [isMuted, setIsMuted] = useState(true);
@@ -68,12 +69,15 @@ const Excellence = () => {
 
   return (
     <div>
-      <div ref={sectionRef} className="relative items-center p-5 md:p-20 md:space-y-10 space-y-5 md:mt-40 mt-10 mb-10">
+      <div
+        ref={sectionRef}
+        className="relative items-center p-5 md:p-20 md:space-y-10 space-y-5 md:mt-40 mt-10 mb-10"
+      >
         {/* Video container with relative positioning */}
         <div className="relative w-full">
           <video
             ref={videoRef}
-            src="https://ik.imagekit.io/i3jiehkks/Manufacture%20-%20Made%20with%20Clipchamp%20(1).mp4?updatedAt=1755856475737"
+            src="\Manufacturer\manufacturing.mp4"
             className="w-full h-auto object-cover rounded-xl"
             muted={isMuted}
             loop
@@ -89,15 +93,23 @@ const Excellence = () => {
           >
             {isMuted ? <VolumeX size={22} /> : <Volume2 size={22} />}
           </button>
-          
+
           {/* Fallback play button if video doesn't autoplay */}
           {!isPlaying && (
             <button
               onClick={tryPlayVideoOnce}
               className="absolute inset-0 flex items-center justify-center w-full h-full bg-black/30"
             >
-              <svg className="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+              <svg
+                className="w-16 h-16 text-white"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                  clipRule="evenodd"
+                />
               </svg>
             </button>
           )}
@@ -117,7 +129,11 @@ const Excellence = () => {
       </div>
 
       <div className="md:mt-20 mt-10">
-        <Image src={ExcellenceImage} alt="excellence" className="w-full object-cover h-full" />
+        <Image
+          src={ExcellenceImage}
+          alt="excellence"
+          className="w-full object-cover h-full"
+        />
       </div>
     </div>
   );
