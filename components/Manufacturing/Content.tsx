@@ -56,11 +56,11 @@ const Content = () => {
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
       >
-        {/* <div className="flex flex-col items-center md:w-auto  md:items-start">
+        <div className="flex flex-col items-center md:w-auto   md:items-start">
           <SectionLabel text="EVERYONE SAYS"/>
-        </div> */}
+        </div>
 
-        <div className="flex flex-col items-start w-full xl:items-start md:w-auto space-y-5 mt-5 md:px-0">
+        <div className="flex flex-col items-start  w-full xl:items-start md:w-auto space-y-5 md:px-0">
           <motion.div variants={headingVariants}>
             <p className="text-3xl md:text-[45px] xl:leading-[55px] text-left xl:text-start lg:text-start text-[#040444] font-medium">
               Innovative Interiors: Where Design Meets Manufacturing Excellence

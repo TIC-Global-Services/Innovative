@@ -60,7 +60,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({
                                         <span className="text-[#040444]">◆</span>
                                     )}
                                 </div>
-                                <h3 className="text-base sm:text-2xl md:text-[34px] font-medium text-[#040444]">
+                                <h3 className="text-base sm:text-2xl font-medium text-[#040444]">
                                     {item.question}
                                 </h3>
                                 <motion.div
@@ -68,7 +68,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({
                                     transition={{ duration: 0.3, ease: "easeInOut" }}
                                     className="text-[#040444] md:hidden flex "
                                 >
-                                    <Plus size={openIndex === index ? 28 : 24} strokeWidth={openIndex === index ? 3 : 2} className="ml-auto" />
+                                    <Plus size={openIndex === index ? 28 : 24} strokeWidth={openIndex === index ? 2 : 2} className="ml-auto" />
                                 </motion.div>
                             </div>
                             <div className="min-w-[24px] hidden md:flex justify-end self-end sm:self-auto">
@@ -77,7 +77,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({
                                     transition={{ duration: 0.3, ease: "easeInOut" }}
                                     className="text-[#040444]"
                                 >
-                                    <Plus size={openIndex === index ? 28 : 24} strokeWidth={openIndex === index ? 3 : 2} className="ml-auto" />
+                                    <Plus size={openIndex === index ? 28 : 24} strokeWidth={openIndex === index ? 2 : 2} className="ml-auto" />
                                 </motion.div>
                             </div>
                         </div>
@@ -121,4 +121,4 @@ const FAQSection: React.FC<FAQSectionProps> = ({
     )
 }
 
-export default FAQSection
+export default FAQSection;

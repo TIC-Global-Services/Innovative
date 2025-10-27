@@ -986,12 +986,14 @@ const ApplyHere: React.FC<ApplyHereProps> = ({
   };
 
   return (
-    <div className={`relative md:min-h-[130vh] h-[115vh] mt-30 ${className}`}>
+    <div
+      className={`relative bg-[#F5F5FE]  w-full mt-30 ${className}`}
+    >
       {/* Background container */}
-      <div className="bg-[#F5F5FE] w-full absolute top-0 left-0 md:h-[85%] h-[90%] z-0" />
+      {/* <div className="bg-[#F5F5FE] w-full absolute top-0 left-0 h-full z-0" /> */}
 
       {/* Content container */}
-      <div className="container mx-auto px-4 md:px-6 lg:px-8 relative z-10 pt-10 pb-20">
+      <div className="container mx-auto px-4 md:px-6 lg:px-8 relative  pt-10 pb-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Left Content - Header Section */}
           <div className="flex flex-col items-center md:-mt-30 md:self-center self-start justify-center lg:sticky lg:top-10">
@@ -1006,7 +1008,7 @@ const ApplyHere: React.FC<ApplyHereProps> = ({
           </div>
 
           {/* Right Content - Form Section */}
-          <div className="lg:mt-[-180px]">
+          <div className="">
             <div className="bg-white rounded-[23px] shadow-xl relative p-6 md:p-8">
               {/* Loading Overlay */}
               {isSubmitting && (

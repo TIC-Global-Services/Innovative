@@ -1,19 +1,18 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import Image, { type StaticImageData } from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import AboutManagementPandian from "@/public/About/Directors/pandian.png";
-import AboutManagementDevi from "@/public/About/Directors/devi.jpeg";
-import AboutManagementNandaKris from "@/public/About/Directors/nandha.jpg";
+import { ChevronLeft, ChevronRight, X, Linkedin, Mail } from "lucide-react";
+import SectionLabel from "../ui/secionLabel";
 
 interface TeamMember {
   id: number;
   name: string;
   title: string;
-  image: string | StaticImageData;
-  bio?: string;
+  image: string;
+  bio: string;
+  linkedin?: string;
+  email?: string;
 }
 
 const managementTeam: TeamMember[] = [
@@ -21,489 +20,297 @@ const managementTeam: TeamMember[] = [
     id: 1,
     name: "Mr. Pandian Kailasam",
     title: "Managing Director",
-    image: AboutManagementPandian,
-    bio: "With nearly 20 years of experience in turnkey interior contracting, Pandian Kailasam has led Innovative Interiors to become one of South India's most trusted names in high-end interiors. His uncompromising focus on quality, detailing, and timely delivery has earned the company strong relationships with leading architects, developers, and brands across hospitality, retail, healthcare, corporate, and residential sectors.Pandian's vision blends craftsmanship with modern execution. He is known for translating an architect's design intent into reality with precision, while building long-lasting partnerships with clients and vendors. Under his leadership, Innovative Interiors has completed landmark projects for groups like GRT, ITC, Brigade, Appaswamy, and many more, while nurturing a team culture that values resilience, collaboration, and continuous innovation.",
+    image: "/About/Directors/pandian.png",
+    bio: "With nearly 20 years of experience in turnkey interior contracting, Pandian Kailasam has led Innovative Interiors to become one of South India's most trusted names in high-end interiors. His uncompromising focus on quality, detailing, and timely delivery has earned the company strong relationships with leading architects, developers, and brands across hospitality, retail, healthcare, corporate, and residential sectors. Pandian's vision blends craftsmanship with modern execution. He is known for translating an architect's design intent into reality with precision, while building long-lasting partnerships with clients and vendors. Under his leadership, Innovative Interiors has completed landmark projects for groups like GRT, ITC, Brigade, Appaswamy, and many more, while nurturing a team culture that values resilience, collaboration, and continuous innovation.",
+   
   },
   {
     id: 2,
     name: "Mr. Nandakrishnan T",
-    title: "CEO",
-    image: AboutManagementNandaKris,
+    title: "Chief Executive Officer",
+    image: "/About/Directors/nandha.jpg",
     bio: "With over three decades of expertise in construction management and business development, Mr. Nandakrishnan has delivered 8+ million sq. ft. of projects across India. Previously Director at Ocean Lifespace, he led landmark industrial and commercial developments for global brands. At Innovative Interiors, he is driving the shift towards a process-driven, organized contracting company, strengthening execution across civil, MEP, and interiors.",
+   
   },
   {
     id: 3,
     name: "Mrs. Devi Pandian",
-    title: "Director – Administration, Finance & HR, Innovative Interiors",
-    image: AboutManagementDevi,
+    title: "Director – Administration, Finance & HR",
+    image: "/About/Directors/devi.jpeg",
     bio: "Mrs. Devi Pandian is a key pillar of Innovative Interiors, balancing personal and professional roles with dedication. As head of Administration, HR, and Finance, she ensures smooth operations, financial discipline, and a motivated team. Her sharp eye for detail, structured approach, and commitment to transparency have been vital in upholding the company's culture and long-term vision.",
+   
   },
 ];
 
-const ManagementTeam: React.FC = () => {
-  const [activeId, setActiveId] = useState<number>(1);
-  const [hoveredId, setHoveredId] = useState<number | null>(null);
-  const [isMobile, setIsMobile] = useState<boolean>(false);
-  const [expandedBios, setExpandedBios] = useState<Set<number>>(new Set());
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+const ManagementTeam = () => {
+  const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
-  // Get current active ID (either hovered or default)
-  const currentActiveId = hoveredId !== null ? hoveredId : activeId;
-
-  // Check if we're on mobile
   useEffect(() => {
-    const checkMobile = (): void => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    // Initial check
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
-
-    // Add event listener
     window.addEventListener("resize", checkMobile);
-
-    // Cleanup
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Initialize scroll position to 0 on mount
-  useEffect(() => {
-    if (scrollContainerRef.current && isMobile) {
-      scrollContainerRef.current.scrollLeft = 0;
-      setCurrentIndex(0);
-    }
-  }, [isMobile]);
-
-  // Scroll to specific index
-  const scrollToIndex = (index: number): void => {
-    if (scrollContainerRef.current) {
-      const container = scrollContainerRef.current;
-      const containerWidth = container.offsetWidth;
-      const cardWidth = 280;
-      const gap = 12;
-      const totalCardWidth = cardWidth + gap;
-
-      // Center the card in the viewport
-      const targetScroll = index * totalCardWidth;
-
-      container.scrollTo({
-        left: targetScroll,
+  const scrollToIndex = (index: number) => {
+    if (scrollRef.current) {
+      const cardWidth = 320;
+      const gap = 24;
+      scrollRef.current.scrollTo({
+        left: index * (cardWidth + gap),
         behavior: "smooth",
       });
-      setCurrentIndex(index);
+      setActiveIndex(index);
     }
   };
 
-  // For mobile scroll controls
-  const scrollToNext = (): void => {
-    const nextIndex = Math.min(currentIndex + 1, managementTeam.length - 1);
-    scrollToIndex(nextIndex);
+  const handleNext = () => {
+    if (activeIndex < managementTeam.length - 1) {
+      scrollToIndex(activeIndex + 1);
+    }
   };
 
-  const scrollToPrev = (): void => {
-    const prevIndex = Math.max(currentIndex - 1, 0);
-    scrollToIndex(prevIndex);
+  const handlePrev = () => {
+    if (activeIndex > 0) {
+      scrollToIndex(activeIndex - 1);
+    }
   };
 
-  // Update current index based on scroll position
-  useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (!container || !isMobile) return;
+  return (
+    <section className="relative py-24 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-white to-gray-50 overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute top-0 right-0 w-1/2 h-full opacity-5">
+        <div className="absolute top-20 right-20 w-96 h-96 bg-[#0A0A50] rounded-full blur-3xl" />
+      </div>
 
-    const handleScroll = (): void => {
-      const scrollLeft = container.scrollLeft;
-      const cardWidth = 280;
-      const gap = 12;
-      const totalCardWidth = cardWidth + gap;
-      const index = Math.round(scrollLeft / totalCardWidth);
-      setCurrentIndex(Math.min(index, managementTeam.length - 1));
-    };
-
-    container.addEventListener("scroll", handleScroll);
-    return () => container.removeEventListener("scroll", handleScroll);
-  }, [isMobile]);
-
-  // Toggle bio expansion
-  const toggleBioExpansion = (memberId: number): void => {
-    setExpandedBios((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(memberId)) {
-        newSet.delete(memberId);
-      } else {
-        newSet.add(memberId);
-      }
-      return newSet;
-    });
-  };
-
-  // Check if bio needs truncation (roughly 100 characters for mobile, 200 for desktop)
-  const shouldTruncateBio = (bio: string, isMobile: boolean): boolean => {
-    const limit = isMobile ? 100 : 200;
-    return bio.length > limit;
-  };
-
-  // Get truncated bio text
-  const getTruncatedBio = (bio: string, isMobile: boolean): string => {
-    const limit = isMobile ? 100 : 200;
-    if (bio.length <= limit) return bio;
-    return bio.substring(0, limit).trim() + "...";
-  };
-
-  // Animation variants
-  const headingVariants = {
-    hidden: { opacity: 0, x: -30 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut",
-      },
-    },
-  };
-
-  const cardVariants = {
-    hidden: {
-      opacity: 0,
-      scale: 0.9,
-      y: 20,
-    },
-    visible: (index: number) => ({
-      opacity: 1,
-      scale: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        delay: index * 0.15,
-        ease: "easeOut",
-      },
-    }),
-  };
-
-  const contentVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.4,
-        ease: "easeOut",
-      },
-    },
-  };
-
-  // Render mobile version
-  if (isMobile) {
-    return (
-      <section className="py-8 w-full">
-        <motion.h2
-          className="text-3xl font-medium text-[#0A0A50] mb-6 text-left px-4"
-          variants={headingVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.5 }}
+      <div className="max-w-7xl mx-auto relative z-10">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-16"
         >
-          Management
-        </motion.h2>
+            <SectionLabel text="Leadership" />
+          <h2 className="font-medium text-[18px] md:text-[60px] lg:text-[40px] text-[#040444] md:leading-[69.12px]  whitespace-nowrap">
+            <span className="bg-gradient-to-r from-[#0A0A50] to-[#1a1a80] bg-clip-text text-transparent">
+              Management
+            </span>
+          </h2>
+          <p className="text-lg text-gray-600 max-w-2xl">
+            Visionary leaders driving innovation and excellence in interior
+            design
+          </p>
+        </motion.div>
 
-        <div className="relative w-full">
-          {/* Mobile scroll controls */}
-          {currentIndex > 0 && (
-            <motion.button
-              onClick={scrollToPrev}
-              className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white/90 rounded-full p-2 shadow-lg"
-              aria-label="Previous member"
-              type="button"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <ChevronLeft className="h-5 w-5 text-[#0A0A50]" />
-            </motion.button>
-          )}
-
-          {currentIndex < managementTeam.length - 1 && (
-            <motion.button
-              onClick={scrollToNext}
-              className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white/90 rounded-full p-2 shadow-lg"
-              aria-label="Next member"
-              type="button"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <ChevronRight className="h-5 w-5 text-[#0A0A50]" />
-            </motion.button>
-          )}
-
-          {/* Container for cards */}
-          <div
-            ref={scrollContainerRef}
-            className="w-full flex overflow-x-scroll snap-x snap-mandatory pb-4 px-4 gap-3 scroll-smooth"
-            style={{
-              WebkitOverflowScrolling: "touch",
-              scrollbarWidth: "none",
-              msOverflowStyle: "none",
-              scrollSnapType: "x mandatory",
-            }}
-          >
-            {managementTeam.map((member, index) => {
-              const isExpanded = expandedBios.has(member.id);
-              const needsTruncation =
-                member.bio && shouldTruncateBio(member.bio, true);
-
-              return (
-                <motion.div
-                  key={member.id}
-                  className="relative overflow-hidden rounded-xl min-w-[280px] max-w-[280px] h-[450px] snap-start flex-shrink-0"
-                  custom={index}
-                  variants={cardVariants}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, amount: 0.3 }}
-                  whileTap={{ scale: 0.98 }}
+        {/* Desktop Grid */}
+        {!isMobile ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {managementTeam.map((member, index) => (
+              <motion.div
+                key={member.id}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.15 }}
+                className="group relative"
+              >
+                <div
+                  onClick={() => setSelectedMember(member)}
+                  className="relative h-[500px] rounded-3xl overflow-hidden cursor-pointer bg-white shadow-lg hover:shadow-2xl transition-all duration-500"
                 >
-                  {/* Background Image */}
+                  {/* Image */}
                   <div className="absolute inset-0">
-                    <Image
+                    <img
                       src={member.image}
                       alt={member.name}
-                      fill
-                      className="object-cover"
-                      sizes="280px"
-                      priority
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
+                    {/* Gradient overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
                   </div>
 
-                  {/* Dark overlay */}
-                  <motion.div
-                    className="absolute inset-0"
-                    animate={{
-                      backgroundColor: isExpanded
-                        ? "rgba(0, 0, 0, 0.75)"
-                        : "rgba(0, 0, 0, 0.4)",
-                    }}
-                    transition={{ duration: 0.3 }}
-                  />
-
-                  {/* Content Container - Always visible */}
-                  <motion.div
-                    className="absolute bottom-0 left-0 right-0 p-4 text-white text-left"
-                    initial={{ opacity: 1 }}
-                    animate={{ opacity: 1 }}
-                  >
-                    <div className="space-y-2">
-                      <h3 className="font-bold text-lg leading-tight">
+                  {/* Content */}
+                  <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 }}
+                    >
+                      <h3 className="text-2xl font-bold mb-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-blue-200 group-hover:bg-clip-text transition-all duration-300">
                         {member.name}
                       </h3>
-                      <p className="text-xs text-white/90 mb-2">
+                      <p className="text-sm text-blue-200 mb-4 font-medium">
                         {member.title}
                       </p>
+                    </motion.div>
+                  </div>
 
-                      {member.bio && (
-                        <div className="text-xs leading-relaxed">
-                          <AnimatePresence mode="wait">
-                            <motion.p
-                              className="line-clamp-none"
-                              key={isExpanded ? "expanded" : "collapsed"}
-                              initial={{ opacity: 0 }}
-                              animate={{ opacity: 1 }}
-                              exit={{ opacity: 0 }}
-                              transition={{ duration: 0.3 }}
-                            >
-                              {isExpanded || !needsTruncation
-                                ? member.bio
-                                : getTruncatedBio(member.bio, true)}
-                            </motion.p>
-                          </AnimatePresence>
-                          {needsTruncation && (
-                            <motion.button
-                              onClick={(
-                                e: React.MouseEvent<HTMLButtonElement>
-                              ) => {
-                                e.stopPropagation();
-                                toggleBioExpansion(member.id);
-                              }}
-                              className="text-blue-300 text-xs hover:underline mt-2 inline-block font-medium"
-                              type="button"
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.95 }}
-                            >
-                              {isExpanded ? "view less" : "view more"}
-                            </motion.button>
-                          )}
-                        </div>
-                      )}
+                  {/* View More indicator */}
+                  <div className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                      <span className="text-white text-xl">→</span>
                     </div>
-                  </motion.div>
-                </motion.div>
-              );
-            })}
-          </div>
-
-          {/* Pagination dots */}
-          <div className="flex justify-center gap-2 mt-4">
-            {managementTeam.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => scrollToIndex(index)}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  currentIndex === index
-                    ? "w-6 bg-[#0A0A50]"
-                    : "w-2 bg-gray-300"
-                }`}
-                aria-label={`Go to slide ${index + 1}`}
-                type="button"
-              />
+                  </div>
+                </div>
+              </motion.div>
             ))}
           </div>
+        ) : (
+          /* Mobile Carousel */
+          <div className="relative">
+            {activeIndex > 0 && (
+              <button
+                onClick={handlePrev}
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors"
+              >
+                <ChevronLeft className="w-6 h-6 text-[#0A0A50]" />
+              </button>
+            )}
 
-          {/* iOS Safari scrollbar hiding */}
-          <style jsx>{`
-            div::-webkit-scrollbar {
-              display: none;
-            }
-          `}</style>
-        </div>
-      </section>
-    );
-  }
+            {activeIndex < managementTeam.length - 1 && (
+              <button
+                onClick={handleNext}
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors"
+              >
+                <ChevronRight className="w-6 h-6 text-[#0A0A50]" />
+              </button>
+            )}
 
-  // Render desktop version
-  return (
-    <section className="py-16 md:px-8 w-full mx-auto grid grid-cols-[0.6fr_1fr] h-screen">
-      <motion.h2
-        className="md:text-[60px] text-[20px] font-medium text-[#0A0A50] mb-12"
-        variants={headingVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.5 }}
-      >
-        Management
-      </motion.h2>
-
-      <motion.div
-        className="flex flex-col md:flex-row items-stretch md:gap-8 h-[500px] md:h-[95%] w-full"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-      >
-        {managementTeam.map((member, index) => {
-          const isActive = currentActiveId === member.id;
-          const isExpanded = expandedBios.has(member.id);
-          const needsTruncation =
-            member.bio && shouldTruncateBio(member.bio, false);
-
-          return (
-            <motion.div
-              key={member.id}
-              className="relative overflow-hidden rounded-xl cursor-pointer h-full"
-              onMouseEnter={() => setHoveredId(member.id)}
-              onMouseLeave={() => setHoveredId(null)}
-              animate={{
-                flex: isActive ? 2 : 0.7,
-              }}
-              transition={{
-                duration: 0.5,
-                ease: [0.4, 0, 0.2, 1],
-              }}
-              initial={{
-                opacity: 0,
-                y: 30,
-              }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-              }}
-              viewport={{ once: true, amount: 0.3 }}
-              whileHover={{ y: -5 }}
+            <div
+              ref={scrollRef}
+              className="flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-8 px-4"
+              style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
             >
-              {/* Background Image */}
-              <div className="absolute inset-0">
-                <Image
-                  src={member.image}
-                  alt={member.name}
-                  fill
-                  className="object-cover"
-                  sizes="33vw"
-                  priority
+              {managementTeam.map((member) => (
+                <div
+                  key={member.id}
+                  onClick={() => setSelectedMember(member)}
+                  className="min-w-[320px] snap-center"
+                >
+                  <div className="relative h-[500px] rounded-3xl overflow-hidden bg-white shadow-lg">
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                      <h3 className="text-xl font-bold mb-2">{member.name}</h3>
+                      <p className="text-sm text-blue-200 mb-3">
+                        {member.title}
+                      </p>
+                      <p className="text-xs text-white/80 line-clamp-3">
+                        {member.bio}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Dots indicator */}
+            <div className="flex justify-center gap-2 mt-6">
+              {managementTeam.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => scrollToIndex(index)}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    activeIndex === index
+                      ? "w-8 bg-[#0A0A50]"
+                      : "w-2 bg-gray-300"
+                  }`}
                 />
-              </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
 
-              {/* Dark overlay */}
-              <motion.div
-                className="absolute inset-0"
-                animate={{
-                  backgroundColor: isExpanded
-                    ? "rgba(0, 0, 0, 0.7)"
-                    : isActive
-                    ? "rgba(0, 0, 0, 0.3)"
-                    : "rgba(0, 0, 0, 0.2)",
-                }}
-                transition={{ duration: 0.3 }}
-              />
+      {/* Modal */}
+      <AnimatePresence>
+        {selectedMember && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+            onClick={() => setSelectedMember(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              className="relative bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={() => setSelectedMember(null)}
+                className="absolute top-6 right-6 z-10 w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center hover:bg-white/20 transition-colors"
+              >
+                <X className="w-6 h-6 text-white" />
+              </button>
 
-              {/* Content Container - Always at bottom */}
-              <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                {isActive && member.bio ? (
-                  <motion.div
-                    className="space-y-2"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4 }}
-                  >
-                    <h3 className="font-bold text-2xl">{member.name}</h3>
-                    <div className="text-sm mt-2 leading-relaxed px-2">
-                      <AnimatePresence mode="wait">
-                        <motion.p
-                          key={isExpanded ? "expanded" : "collapsed"}
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          exit={{ opacity: 0 }}
-                          transition={{ duration: 0.3 }}
+              <div className="grid md:grid-cols-2 h-full">
+                {/* Image side */}
+                <div className="relative h-64 md:h-auto">
+                  <img
+                    src={selectedMember.image}
+                    alt={selectedMember.name}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-white/10 to-transparent" />
+                </div>
+
+                {/* Content side */}
+                <div className="p-8 md:p-12 overflow-y-auto">
+                  <div className="mb-6">
+                    <h3 className="text-3xl md:text-4xl font-bold text-[#0A0A50] mb-3">
+                      {selectedMember.name}
+                    </h3>
+                    <p className="text-lg text-blue-600 font-medium mb-4">
+                      {selectedMember.title}
+                    </p>
+                    <div className="flex gap-3">
+                      {selectedMember.linkedin && (
+                        <a
+                          href={selectedMember.linkedin}
+                          className="w-10 h-10 rounded-full bg-[#0A0A50]/10 flex items-center justify-center hover:bg-[#0A0A50]/20 transition-colors"
                         >
-                          {isExpanded || !needsTruncation
-                            ? member.bio
-                            : getTruncatedBio(member.bio, false)}
-                        </motion.p>
-                      </AnimatePresence>
-                      {needsTruncation && (
-                        <motion.button
-                          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                            e.stopPropagation();
-                            toggleBioExpansion(member.id);
-                          }}
-                          className="text-blue-300 text-sm hover:underline mt-2 inline-block font-medium"
-                          type="button"
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
+                          <Linkedin className="w-5 h-5 text-[#0A0A50]" />
+                        </a>
+                      )}
+                      {selectedMember.email && (
+                        <a
+                          href={`mailto:${selectedMember.email}`}
+                          className="w-10 h-10 rounded-full bg-[#0A0A50]/10 flex items-center justify-center hover:bg-[#0A0A50]/20 transition-colors"
                         >
-                          {isExpanded ? "view less" : "view more"}
-                        </motion.button>
+                          <Mail className="w-5 h-5 text-[#0A0A50]" />
+                        </a>
                       )}
                     </div>
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <h3 className="font-bold text-xl">{member.name}</h3>
-                    <p className="text-sm text-white/90 mt-1">{member.title}</p>
-                  </motion.div>
-                )}
+                  </div>
+                  <div className="prose prose-gray max-w-none">
+                    <p className="text-gray-700 leading-relaxed">
+                      {selectedMember.bio}
+                    </p>
+                  </div>
+                </div>
               </div>
             </motion.div>
-          );
-        })}
-      </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <style jsx>{`
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
     </section>
   );
 };

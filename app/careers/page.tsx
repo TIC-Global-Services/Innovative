@@ -22,21 +22,9 @@ const CareersPage = () => {
           <CareerCards/>
           {/* <ScrollImage /> */}
           <Journey />
+        </div>
           <ApplyHere />
-        </div>
-        <div className="relative w-full h-full md:mt-20">
-          {/* Gradient Overlay */}
-          <div className="absolute top-0 left-0 w-full h-full pointer-events-none" style={{
-            background: "linear-gradient(180deg, #FFFFFF 3.76%, rgba(255, 255, 255, 0) 67.57%)"
-          }} />
-
-          {/* Image */}
-          <Image
-            src={CareerFooter || "/placeholder.svg"}
-            alt="footer image"
-            className="w-full h-full object-cover"
-          />
-        </div>
+   
       </div>
     </MainLayout>
   )

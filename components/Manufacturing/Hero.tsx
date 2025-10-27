@@ -12,10 +12,6 @@ const Hero = () => {
           <TopNav />
       </div>
 
-
-
-      
-
       <div className='absolute top-5 md:left-5 w-full z-10'>
           <TopNav />
       </div>
@@ -25,10 +21,7 @@ const Hero = () => {
       </div>
       
       </div>
-      
     
-  
-
     </div>
   )
 }
