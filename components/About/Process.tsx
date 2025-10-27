@@ -397,25 +397,6 @@ const Process: React.FC = () => {
           onTouchEnd={handleTouchEnd}
           onMouseDown={handleMouseDown}
         >
-          {/* Navigation buttons */}
-          {/* <button
-            onClick={prevSlide}
-            disabled={isAnimating}
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white rounded-full p-2 shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-            aria-label="Previous slide"
-          >
-            <ChevronLeft className="w-5 h-5 text-[#040444]" />
-          </button>
-
-          <button
-            onClick={nextSlide}
-            disabled={isAnimating}
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white rounded-full p-2 shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-            aria-label="Next slide"
-          >
-            <ChevronRight className="w-5 h-5 text-[#040444]" />
-          </button> */}
-
           <AnimatePresence initial={false} custom={1}>
             <motion.div
               key={currentSlide}

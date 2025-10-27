@@ -7,7 +7,7 @@ import { useEffect } from "react";
 
 interface MainLayoutProps {
   heroImage?: StaticImageData;
-  heroVideo?: string; // New prop for video URL
+  heroVideo?: string;
   heroText?: string;
   title?: string;
   description?: string;
@@ -73,16 +73,19 @@ const MainLayout = ({
             </div>
           )}
 
-          {title && description && (
+          {title && (
             <div
-              className={`absolute md:left-20 -bottom-15 md:-bottom-25 left-7 font-medium text-[14px] md:text-[20px] md:leading-[35px] leading-[20px] ${textColorClass} max-w-[90%] md:max-w-[80%]`}
+              className={`absolute md:left-20 -bottom-0 md:-bottom-25 left-7 font-medium ${textColorClass} max-w-[90%] md:max-w-[80%]`}
             >
               <h1 className="md:text-[60px] text-[20px] md:leading-13">
                 {title}
               </h1>
-              <p className="md:text-[20px] md:w-[70%] mt-4 md:leading-[26px] leading-[20px]">
-                {description}
-              </p>
+
+              {description && (
+                <p className="md:text-[20px] md:w-[70%] mt-4 md:leading-[26px] leading-[20px] break-words whitespace-pre-wrap">
+                  {description}
+                </p>
+              )}
             </div>
           )}
         </div>

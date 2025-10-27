@@ -69,16 +69,16 @@ const Content = () => {
       {/* Vision Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 xl:gap-12 mt-10 md:mt-20 lg:mt-72">
         {/* Left Column */}
-        <div className="flex flex-col space-y-5 items-center xl:items-start lg:items-start">
+        <div className="flex flex-col space-y-5 items-start lg:items-start">
           <SectionLabel text="OUR VISION" />
-          <h2 className="font-medium text-[20px] md:text-[40px] 2xl:text-[45px] leading-tight md:leading-tight 2xl:leading-[54px] font-medium text-center xl:text-left lg:text-left text-[#040444] max-w-3xl">
+          <h2 className="text-[20px] md:text-[40px] 2xl:text-[45px] leading-tight md:leading-tight 2xl:leading-[54px] font-medium text-left xl:text-left lg:text-left text-[#040444] max-w-3xl">
             Bringing Life Into Spaces With Craftsmanship That Speaks for Itself.
           </h2>
         </div>
 
         {/* Right Column */}
         <div className="flex flex-col justify-center">
-          <p className="font-normal text-[14px] md:text-[20px] lg:text-left text-center xl:text-left text-[#393535]">
+          <p className="font-normal text-[14px] md:text-[20px] lg:text-left text-left xl:text-left text-[#393535]">
             Innovative Interiors is a leading turnkey contracting company specializing in architect designed - project
             execution and fine woodworking. With over 19 years of experience, we've partnered with India's finest
             architects and brands to bring spaces to life — from iconic 5-star hotels and super-specialty hospitals to

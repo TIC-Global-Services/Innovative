@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Image, { type StaticImageData } from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import AboutManagementPandian from "@/public/About/Directors/pandian.png";
 import AboutManagementDevi from "@/public/About/Directors/devi.jpeg";
@@ -45,6 +45,7 @@ const ManagementTeam: React.FC = () => {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const [expandedBios, setExpandedBios] = useState<Set<number>>(new Set());
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   // Get current active ID (either hovered or default)
@@ -66,18 +67,62 @@ const ManagementTeam: React.FC = () => {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // For mobile scroll controls
-  const scrollToNext = (): void => {
+  // Initialize scroll position to 0 on mount
+  useEffect(() => {
+    if (scrollContainerRef.current && isMobile) {
+      scrollContainerRef.current.scrollLeft = 0;
+      setCurrentIndex(0);
+    }
+  }, [isMobile]);
+
+  // Scroll to specific index
+  const scrollToIndex = (index: number): void => {
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: 280, behavior: "smooth" });
+      const container = scrollContainerRef.current;
+      const containerWidth = container.offsetWidth;
+      const cardWidth = 280;
+      const gap = 12;
+      const totalCardWidth = cardWidth + gap;
+
+      // Center the card in the viewport
+      const targetScroll = index * totalCardWidth;
+
+      container.scrollTo({
+        left: targetScroll,
+        behavior: "smooth",
+      });
+      setCurrentIndex(index);
     }
   };
 
-  const scrollToPrev = (): void => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: -280, behavior: "smooth" });
-    }
+  // For mobile scroll controls
+  const scrollToNext = (): void => {
+    const nextIndex = Math.min(currentIndex + 1, managementTeam.length - 1);
+    scrollToIndex(nextIndex);
   };
+
+  const scrollToPrev = (): void => {
+    const prevIndex = Math.max(currentIndex - 1, 0);
+    scrollToIndex(prevIndex);
+  };
+
+  // Update current index based on scroll position
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container || !isMobile) return;
+
+    const handleScroll = (): void => {
+      const scrollLeft = container.scrollLeft;
+      const cardWidth = 280;
+      const gap = 12;
+      const totalCardWidth = cardWidth + gap;
+      const index = Math.round(scrollLeft / totalCardWidth);
+      setCurrentIndex(Math.min(index, managementTeam.length - 1));
+    };
+
+    container.addEventListener("scroll", handleScroll);
+    return () => container.removeEventListener("scroll", handleScroll);
+  }, [isMobile]);
 
   // Toggle bio expansion
   const toggleBioExpansion = (memberId: number): void => {
@@ -92,86 +137,136 @@ const ManagementTeam: React.FC = () => {
     });
   };
 
-  // Check if bio needs truncation (roughly 150 characters for mobile, 200 for desktop)
+  // Check if bio needs truncation (roughly 100 characters for mobile, 200 for desktop)
   const shouldTruncateBio = (bio: string, isMobile: boolean): boolean => {
-    const limit = isMobile ? 150 : 200;
+    const limit = isMobile ? 100 : 200;
     return bio.length > limit;
   };
 
   // Get truncated bio text
   const getTruncatedBio = (bio: string, isMobile: boolean): string => {
-    const limit = isMobile ? 150 : 200;
+    const limit = isMobile ? 100 : 200;
     if (bio.length <= limit) return bio;
     return bio.substring(0, limit).trim() + "...";
   };
 
-  // Fix for iOS Safari - ensure proper scrolling behavior
-  useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (!container || !isMobile) return;
+  // Animation variants
+  const headingVariants = {
+    hidden: { opacity: 0, x: -30 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+      },
+    },
+  };
 
-    // Force layout recalculation on iOS
-    const handleResize = (): void => {
-      container.style.display = "none";
-      // Force reflow
-      void container.offsetHeight;
-      container.style.display = "flex";
-    };
+  const cardVariants = {
+    hidden: {
+      opacity: 0,
+      scale: 0.9,
+      y: 20,
+    },
+    visible: (index: number) => ({
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        delay: index * 0.15,
+        ease: "easeOut",
+      },
+    }),
+  };
 
-    handleResize();
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [isMobile]);
+  const contentVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.4,
+        ease: "easeOut",
+      },
+    },
+  };
 
   // Render mobile version
   if (isMobile) {
     return (
-      <section className="py-8  w-full  ">
-        <h2 className="text-3xl font-medium text-[#0A0A50] mb-6">Management</h2>
+      <section className="py-8 w-full">
+        <motion.h2
+          className="text-3xl font-medium text-[#0A0A50] mb-6 text-left px-4"
+          variants={headingVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.5 }}
+        >
+          Management
+        </motion.h2>
 
-        <div className="relative gap-10 w-full">
+        <div className="relative w-full">
           {/* Mobile scroll controls */}
-          <button
-            onClick={scrollToPrev}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 rounded-full p-2 shadow-md"
-            aria-label="Previous member"
-            type="button"
-          >
-            <ChevronLeft className="h-5 w-5 text-[#0A0A50]" />
-          </button>
-          <button
-            onClick={scrollToNext}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 rounded-full p-2 shadow-md"
-            aria-label="Next member"
-            type="button"
-          >
-            <ChevronRight className="h-5 w-5 text-[#0A0A50]" />
-          </button>
+          {currentIndex > 0 && (
+            <motion.button
+              onClick={scrollToPrev}
+              className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white/90 rounded-full p-2 shadow-lg"
+              aria-label="Previous member"
+              type="button"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <ChevronLeft className="h-5 w-5 text-[#0A0A50]" />
+            </motion.button>
+          )}
+
+          {currentIndex < managementTeam.length - 1 && (
+            <motion.button
+              onClick={scrollToNext}
+              className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white/90 rounded-full p-2 shadow-lg"
+              aria-label="Next member"
+              type="button"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <ChevronRight className="h-5 w-5 text-[#0A0A50]" />
+            </motion.button>
+          )}
 
           {/* Container for cards */}
           <div
             ref={scrollContainerRef}
-            className="w-full flex overflow-x-auto snap-x snap-mandatory pb-4 touch-pan-x"
+            className="w-full flex overflow-x-scroll snap-x snap-mandatory pb-4 px-4 gap-3 scroll-smooth"
             style={{
-              WebkitOverflowScrolling: "touch", // For older iOS
-              scrollbarWidth: "none", // Firefox
-              msOverflowStyle: "none", // IE/Edge
+              WebkitOverflowScrolling: "touch",
+              scrollbarWidth: "none",
+              msOverflowStyle: "none",
+              scrollSnapType: "x mandatory",
             }}
           >
-            {managementTeam.map((member) => {
-              const isActive = currentActiveId === member.id;
+            {managementTeam.map((member, index) => {
               const isExpanded = expandedBios.has(member.id);
               const needsTruncation =
                 member.bio && shouldTruncateBio(member.bio, true);
 
               return (
-                <div
+                <motion.div
                   key={member.id}
-                  className="relative overflow-hidden rounded-xl cursor-pointer min-w-[350px] h-[700px] snap-center"
-                  onClick={() => setActiveId(member.id)}
+                  className="relative overflow-hidden rounded-xl min-w-[280px] max-w-[280px] h-[450px] snap-start flex-shrink-0"
+                  custom={index}
+                  variants={cardVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.3 }}
+                  whileTap={{ scale: 0.98 }}
                 >
                   {/* Background Image */}
                   <div className="absolute inset-0">
@@ -186,54 +281,86 @@ const ManagementTeam: React.FC = () => {
                   </div>
 
                   {/* Dark overlay */}
-                  <div
-                    className={
-                      isActive ? "absolute inset-0 " : "absolute inset-0 "
-                    }
-                  ></div>
-                  {isExpanded ? (
-                    <div className="absolute inset-0 bg-black/70"></div>
-                  ) : (
-                    <div className="absolute inset-0 bg-black/10"></div>
-                  )}
+                  <motion.div
+                    className="absolute inset-0"
+                    animate={{
+                      backgroundColor: isExpanded
+                        ? "rgba(0, 0, 0, 0.75)"
+                        : "rgba(0, 0, 0, 0.4)",
+                    }}
+                    transition={{ duration: 0.3 }}
+                  />
 
-                  {/* Content Container - Always at bottom */}
-                  <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                    {isActive && member.bio ? (
-                      <div className="space-y-2">
-                        <h3 className="font-bold text-xl">{member.name}</h3>
-                        <div className="text-sm mt-2 leading-snug">
-                          <p className="line-clamp-none text-lg leading-snug">
-                            {isExpanded || !needsTruncation
-                              ? member.bio
-                              : getTruncatedBio(member.bio, true)}
-                          </p>
+                  {/* Content Container - Always visible */}
+                  <motion.div
+                    className="absolute bottom-0 left-0 right-0 p-4 text-white text-left"
+                    initial={{ opacity: 1 }}
+                    animate={{ opacity: 1 }}
+                  >
+                    <div className="space-y-2">
+                      <h3 className="font-bold text-lg leading-tight">
+                        {member.name}
+                      </h3>
+                      <p className="text-xs text-white/90 mb-2">
+                        {member.title}
+                      </p>
+
+                      {member.bio && (
+                        <div className="text-xs leading-relaxed">
+                          <AnimatePresence mode="wait">
+                            <motion.p
+                              className="line-clamp-none"
+                              key={isExpanded ? "expanded" : "collapsed"}
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              exit={{ opacity: 0 }}
+                              transition={{ duration: 0.3 }}
+                            >
+                              {isExpanded || !needsTruncation
+                                ? member.bio
+                                : getTruncatedBio(member.bio, true)}
+                            </motion.p>
+                          </AnimatePresence>
                           {needsTruncation && (
-                            <button
+                            <motion.button
                               onClick={(
                                 e: React.MouseEvent<HTMLButtonElement>
                               ) => {
                                 e.stopPropagation();
                                 toggleBioExpansion(member.id);
                               }}
-                              className="text-blue-300 text-sm hover:underline mt-1 inline-block"
+                              className="text-blue-300 text-xs hover:underline mt-2 inline-block font-medium"
                               type="button"
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
                             >
                               {isExpanded ? "view less" : "view more"}
-                            </button>
+                            </motion.button>
                           )}
                         </div>
-                      </div>
-                    ) : (
-                      <div>
-                        <h3 className="font-bold text-lg">{member.name}</h3>
-                        <p className="text-xs text-white/90">{member.title}</p>
-                      </div>
-                    )}
-                  </div>
-                </div>
+                      )}
+                    </div>
+                  </motion.div>
+                </motion.div>
               );
             })}
+          </div>
+
+          {/* Pagination dots */}
+          <div className="flex justify-center gap-2 mt-4">
+            {managementTeam.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => scrollToIndex(index)}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  currentIndex === index
+                    ? "w-6 bg-[#0A0A50]"
+                    : "w-2 bg-gray-300"
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+                type="button"
+              />
+            ))}
           </div>
 
           {/* iOS Safari scrollbar hiding */}
@@ -249,13 +376,25 @@ const ManagementTeam: React.FC = () => {
 
   // Render desktop version
   return (
-    <section className="py-16  md:px-8 w-full mx-auto grid grid-cols-[0.6fr_1fr] h-screen">
-      <h2 className="md:text-[60px] text-[20px] font-medium text-[#0A0A50] mb-12">
+    <section className="py-16 md:px-8 w-full mx-auto grid grid-cols-[0.6fr_1fr] h-screen">
+      <motion.h2
+        className="md:text-[60px] text-[20px] font-medium text-[#0A0A50] mb-12"
+        variants={headingVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.5 }}
+      >
         Management
-      </h2>
+      </motion.h2>
 
-      <div className="flex flex-col md:flex-row items-stretch md:gap-8 h-[500px] md:h-[95%] w-full">
-        {managementTeam.map((member) => {
+      <motion.div
+        className="flex flex-col md:flex-row items-stretch md:gap-8 h-[500px] md:h-[95%] w-full"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+      >
+        {managementTeam.map((member, index) => {
           const isActive = currentActiveId === member.id;
           const isExpanded = expandedBios.has(member.id);
           const needsTruncation =
@@ -274,7 +413,16 @@ const ManagementTeam: React.FC = () => {
                 duration: 0.5,
                 ease: [0.4, 0, 0.2, 1],
               }}
-              initial={false}
+              initial={{
+                opacity: 0,
+                y: 30,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+              }}
+              viewport={{ once: true, amount: 0.3 }}
+              whileHover={{ y: -5 }}
             >
               {/* Background Image */}
               <div className="absolute inset-0">
@@ -289,54 +437,73 @@ const ManagementTeam: React.FC = () => {
               </div>
 
               {/* Dark overlay */}
-              {isActive ? (
-                <div className="absolute inset-0 "></div>
-              ) : (
-                <div className="absolute inset-0 bg-black/20"></div>
-              )}
-
-              {isExpanded ? (
-                <div className="absolute inset-0 bg-black/70"></div>
-              ) : (
-                <div className="absolute inset-0 bg-black/10"></div>
-              )}
+              <motion.div
+                className="absolute inset-0"
+                animate={{
+                  backgroundColor: isExpanded
+                    ? "rgba(0, 0, 0, 0.7)"
+                    : isActive
+                    ? "rgba(0, 0, 0, 0.3)"
+                    : "rgba(0, 0, 0, 0.2)",
+                }}
+                transition={{ duration: 0.3 }}
+              />
 
               {/* Content Container - Always at bottom */}
-              <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+              <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
                 {isActive && member.bio ? (
-                  <div className="space-y-2">
-                    <h3 className="font-bold text-xl">{member.name}</h3>
-                    <div className="text-sm mt-2 leading-snug px-2">
-                      <p>
-                        {isExpanded || !needsTruncation
-                          ? member.bio
-                          : getTruncatedBio(member.bio, false)}
-                      </p>
+                  <motion.div
+                    className="space-y-2"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4 }}
+                  >
+                    <h3 className="font-bold text-2xl">{member.name}</h3>
+                    <div className="text-sm mt-2 leading-relaxed px-2">
+                      <AnimatePresence mode="wait">
+                        <motion.p
+                          key={isExpanded ? "expanded" : "collapsed"}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          {isExpanded || !needsTruncation
+                            ? member.bio
+                            : getTruncatedBio(member.bio, false)}
+                        </motion.p>
+                      </AnimatePresence>
                       {needsTruncation && (
-                        <button
+                        <motion.button
                           onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                             e.stopPropagation();
                             toggleBioExpansion(member.id);
                           }}
-                          className="text-blue-300 text-xs hover:underline mt-1 inline-block"
+                          className="text-blue-300 text-sm hover:underline mt-2 inline-block font-medium"
                           type="button"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
                         >
                           {isExpanded ? "view less" : "view more"}
-                        </button>
+                        </motion.button>
                       )}
                     </div>
-                  </div>
+                  </motion.div>
                 ) : (
-                  <div>
-                    <h3 className="font-bold text-lg">{member.name}</h3>
-                    <p className="text-xs text-white/90">{member.title}</p>
-                  </div>
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <h3 className="font-bold text-xl">{member.name}</h3>
+                    <p className="text-sm text-white/90 mt-1">{member.title}</p>
+                  </motion.div>
                 )}
               </div>
             </motion.div>
           );
         })}
-      </div>
+      </motion.div>
     </section>
   );
 };
