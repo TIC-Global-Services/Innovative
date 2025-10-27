@@ -15,30 +15,35 @@ const VideoAnimation: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const scrollTriggerRef = useRef<ScrollTrigger | null>(null);
   
-  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
   const [videoReady, setVideoReady] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
 
   // Handle resize with proper debouncing
-  useEffect(() => {
-    let resizeTimer: NodeJS.Timeout;
-    
-    const handleResize = (): void => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => {
-        const mobile = window.innerWidth < 768;
-        if (mobile !== isMobile) {
-          setIsMobile(mobile);
-        }
-      }, 150);
-    };
+ useEffect(() => {
+  // ✅ Run only on client (guards against SSR)
+  if (typeof window === "undefined") return;
 
-    window.addEventListener('resize', handleResize, { passive: true } as AddEventListenerOptions);
-    return () => {
-      clearTimeout(resizeTimer);
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [isMobile]);
+  let resizeTimer: ReturnType<typeof setTimeout>;
+
+  const handleResize = (): void => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+    }, 150);
+  };
+
+  // ✅ Initialize once on mount
+  handleResize();
+
+  window.addEventListener("resize", handleResize, { passive: true });
+  return () => {
+    clearTimeout(resizeTimer);
+    window.removeEventListener("resize", handleResize);
+  };
+}, []);
+
 
   // Main scroll animation effect
   useEffect(() => {
