@@ -136,6 +136,10 @@ const mobileContent: StoryItem[] = [
   ...contentscol2.slice(0, 2),
 ];
 
+if (typeof window !== "undefined") {
+  console.log(window.location.href);
+}
+
 const Stories: React.FC = () => {
   const container1Ref = useRef<HTMLDivElement>(null);
   const container2Ref = useRef<HTMLDivElement>(null);

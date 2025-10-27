@@ -22,13 +22,15 @@ interface ViewportDimensions {
 }
 
 // Custom hook for viewport dimensions
+// ✅ Fixed version of useViewport
 const useViewport = (): ViewportDimensions => {
   const [viewport, setViewport] = useState<ViewportDimensions>({
-    width: typeof window !== 'undefined' ? window.innerWidth : 1024,
-    height: typeof window !== 'undefined' ? window.innerHeight : 768,
+    width: 1024,
+    height: 768,
   });
 
   useEffect(() => {
+    // Only runs on client
     const handleResize = (): void => {
       setViewport({
         width: window.innerWidth,
@@ -36,13 +38,15 @@ const useViewport = (): ViewportDimensions => {
       });
     };
 
-    window.addEventListener('resize', handleResize, { passive: true });
-    return () => window.removeEventListener('resize', handleResize);
+    // Initialize immediately after mount
+    handleResize();
+
+    window.addEventListener("resize", handleResize, { passive: true });
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return viewport;
 };
-
 // Fixed custom hook for intersection observer
 const useIntersectionObserver = (
   ref: React.RefObject<HTMLElement | null>,
