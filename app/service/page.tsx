@@ -24,11 +24,11 @@ const ServicePage = () => {
         <div className="p-5">
           <Transform />
         </div>
-        <Image
+        {/* <Image
           src={ServiceBottomImg || "/placeholder.svg"}
           alt="Footer Image Service"
           className="w-full md:h-full object-cover h-[300px]"
-        />
+        /> */}
       </div>
     </MainLayout>
   )

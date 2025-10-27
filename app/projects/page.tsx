@@ -30,11 +30,11 @@ const ProjectsPage = () => {
         <div className="p-5 hidden md:block">
           <InfoBanner backgroundImage={ProjectInfoBanner}/>
         </div>
-        <Image
+        {/* <Image
           src={ProjectBottomImg || "/placeholder.svg"}
           alt="Footer Project Image"
           className="w-full md:h-full object-cover h-[300px] mt-20 md:mt-0"
-        />
+        /> */}
       </div>
     </MainLayout>
     </>

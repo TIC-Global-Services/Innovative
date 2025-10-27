@@ -65,7 +65,7 @@ const Content = () => {
   }, [])
 
   return (
-    <div className=" mx-auto w-full">
+    <div className=" mx-auto w-full mt-2">
       {/* Vision Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 xl:gap-12 mt-10 md:mt-20 lg:mt-72">
         {/* Left Column */}

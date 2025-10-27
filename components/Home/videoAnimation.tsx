@@ -157,7 +157,7 @@ const VideoAnimation: React.FC = () => {
             }}
           >
             <source
-              src="https://ik.imagekit.io/99y1fc9mh/Innovative/vd.mp4?updatedAt=1756020563812"
+              src="/home/interior-gray-video.mp4"
               type="video/mp4"
             />
             Your browser does not support the video tag.

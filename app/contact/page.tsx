@@ -17,11 +17,11 @@ const ContactPage = () => {
         <div className="p-5">{/* Content starts after hero section */}</div>
         <Appoinment />
         <Faq />
-        <Image
+        {/* <Image
           src={ContactBottomImg || "/placeholder.svg"}
           alt="footer image"
           className="w-full h-full object-cover"
-        />
+        /> */}
       </div>
     </MainLayout>
   )

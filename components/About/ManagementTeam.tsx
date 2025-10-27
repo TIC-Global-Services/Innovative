@@ -86,7 +86,7 @@ const ManagementTeam = () => {
         <div className="absolute top-20 right-20 w-96 h-96 bg-[#0A0A50] rounded-full blur-3xl" />
       </div>
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="max-w-7xl mx-auto relative z-10 ">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}

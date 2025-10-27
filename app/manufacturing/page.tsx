@@ -15,17 +15,17 @@ const ManufacturingPage = () => {
       heroImage={ManufacturingBanner}
       heroText="Manufacturing Excellence At Innovative Interiors"
     >
-      <div className="bg-white overflow-x-hidden">
+      <div className="bg-white overflow-x-hidden md:px-16">
         <div className="p-5 md:mt-20">
           <Content />
           <Tower />
           <Excellence />
         </div>
-        <Image
+        {/* <Image
           src={ManufacturingBottomImg || "/placeholder.svg"}
           alt="footer image"
           className="w-full md:h-full object-cover h-[300px]"
-        />
+        /> */}
       </div>
     </MainLayout>
   );

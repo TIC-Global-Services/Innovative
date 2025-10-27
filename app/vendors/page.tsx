@@ -23,13 +23,13 @@ const VendorsPage = () => {
           <Partner />
           <WhyPartner />
           <Faq />
-          <VendorRegistration />
         </div>
-        <Image
+          <VendorRegistration />
+        {/* <Image
           src={VendorBottomImg || "/placeholder.svg"}
           alt="Footer Image"
           className="w-full md:h-full object-cover h-[600px]"
-        />
+        /> */}
       </div>
     </MainLayout>
   )

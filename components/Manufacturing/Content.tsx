@@ -48,17 +48,17 @@ const Content = () => {
   };
 
   return (
-    <div className="mb-[40px] mt-[80px] md:mt-[150px] md:mb-[100px]">
+    <div className="mb-[40px] mt-[80px] md:mt-[150px] md:mb-[100px] ">
       <motion.div
-        className="grid grid-cols-1 md:grid-cols-[0.5fr_1fr] xl:justify-between justify-center space-y-5"
+        className="grid grid-cols-1  xl:justify-between justify-center space-y-5"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
       >
-        <div className="flex flex-col items-center md:w-auto   md:items-start">
+        {/* <div className="flex flex-col items-center md:w-auto   md:items-start">
           <SectionLabel text="EVERYONE SAYS"/>
-        </div>
+        </div> */}
 
         <div className="flex flex-col items-start  w-full xl:items-start md:w-auto space-y-5 md:px-0">
           <motion.div variants={headingVariants}>

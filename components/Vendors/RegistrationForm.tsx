@@ -302,15 +302,15 @@ const VendorRegistration: React.FC<VendorRegistrationProps> = ({
   };
 
   return (
-    <div className={`relative min-h-screen mb-32 ${className}`}>
+    <div className={`relative bg-[#F5F5FE] min-h-screen mb-32 ${className}`}>
       {/* Background container */}
-      <div className="bg-[#F5F5FE] w-full absolute top-0 left-0 md:h-[85%] h-[95%] z-0" />
+      <div className=" w-full absolute top-0 left-0 md:h-[85%] h-[95%] z-0" />
 
       {/* Content container */}
       <div className="container mx-auto px-4 md:px-6 lg:px-8 relative z-10 pt-10 pb-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 justify-content-center gap-8 lg:gap-12">
           {/* Left Content - Header Section */}
-          <div className="flex flex-col justify-center lg:sticky lg:top-10 self-start">
+          <div className="flex flex-col justify-center lg:sticky lg:top-10 self-center">
             <h1 className="text-[#040444] text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[80px] font-semibold mb-4 leading-tight md:leading-[1.1]">
               {title}
             </h1>
@@ -322,7 +322,7 @@ const VendorRegistration: React.FC<VendorRegistrationProps> = ({
           </div>
 
           {/* Right Content - Form Section */}
-          <div className="lg:mt-[-120px]">
+          <div className="">
             <div className="bg-white rounded-[23px] shadow-xl relative">
               {/* Loading Overlay */}
               {isSubmitting && (
