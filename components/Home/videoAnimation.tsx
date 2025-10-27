@@ -7,8 +7,9 @@ import SectionLabel from "../ui/secionLabel";
 import ArrowBtn from "../ui/arrowBtn";
 
 // Register plugin once at module level
-gsap.registerPlugin(ScrollTrigger);
-
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 const VideoAnimation: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
