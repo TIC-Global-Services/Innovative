@@ -20,6 +20,10 @@ interface ViewportDimensions {
   width: number;
   height: number;
 }
+if (typeof window !== 'undefined') {
+  // browser-only code here
+  console.log(window.location.href);
+}
 
 // Custom hook for viewport dimensions
 const useViewport = (): ViewportDimensions => {
