@@ -6,7 +6,7 @@ const ServicesSection = () => {
     <div className="w-full  md:mt-36 mt-5   mx-auto">
       <div className="flex flex-col lg:flex-row">
         {/* Left Column */}
-        <div className="w-full lg:w-[45%] lg:px-8 py-8">
+        <div className="w-full lg:w-[45%] lg:pr-8 py-8">
           <div className="space-y-12">
             <div className="lg:hidden w-full h-[400px] rounded-xl bg-[#E5EAEB] my-8 flex items-end justify-center">
               <Image src={Interior} alt="Furniture detail" width={180} height={180} className="object-cover h-full w-full rounded-xl" />

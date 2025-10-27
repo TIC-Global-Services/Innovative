@@ -25,7 +25,7 @@ export default function RootLayout({
       <body className={`${inter.variable} antialiased font-sans`}>
         {children}
         <ToastContainer />
-        <div className="fixed bottom-10 right-6  max-w-2xl rounded-3xl px-5">
+        <div className="fixed bottom-10 right-6 z-50 max-w-2xl rounded-3xl px-5">
           <img 
             src="/20.png" 
             alt="Logo" 

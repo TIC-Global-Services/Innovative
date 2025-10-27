@@ -49,13 +49,13 @@ const MainLayout = ({
                 loop
                 muted
                 playsInline
-                className="xl:rounded-[30px] md:rounded-[30px] rounded-[10px] w-full h-[90vh] md:h-[95vh] object-cover object-bottom"
+                className="xl:rounded-[30px] md:rounded-[30px] rounded-[10px] w-full h-[90vh] md:h-[95vh] object-cover object-bottom "
               />
             ) : (
               <Image
                 src={heroImage || "/placeholder.svg"}
                 alt="hero image"
-                className="xl:rounded-[30px] md:rounded-[30px] rounded-[10px] w-full h-[90vh] md:h-[95vh] object-cover"
+                className="xl:rounded-[30px] md:rounded-[30px] rounded-[10px] w-full h-[90vh] md:h-[95vh] object-cover  object-bottom "
                 priority
               />
             )}
@@ -77,7 +77,7 @@ const MainLayout = ({
             <div
               className={`absolute md:left-20 -bottom-0 md:-bottom-25 left-7 font-medium ${textColorClass} max-w-[90%] md:max-w-[80%]`}
             >
-              <h1 className="md:text-[60px] text-[20px] md:leading-13">
+              <h1 className="md:text-[60px] text-[30px] md:leading-13">
                 {title}
               </h1>
 

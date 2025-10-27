@@ -478,4 +478,4 @@ const Process: React.FC = () => {
   )
 }
 
-export default Process
+export default Process;

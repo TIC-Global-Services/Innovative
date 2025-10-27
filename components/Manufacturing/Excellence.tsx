@@ -157,7 +157,7 @@ const Excellence = () => {
           <video
             ref={videoRef}
             src="\Manufacturer\manufacturing_10mb.mp4"
-            className="w-[1320px] h-[670px] object-cover rounded-xl"
+            className="md:w-[1320px] md:h-[670px] object-cover rounded-xl"
             muted={isMuted}
             loop
             playsInline

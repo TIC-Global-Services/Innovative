@@ -14,7 +14,7 @@ import ArrowBtn from "../ui/arrowBtn";
 
 const Partner = () => {
   return (
-    <div className="md:mt-52 mt-16 md:mb-20">
+    <div className="md:mt-52 mt-40 md:mb-20">
       <div className="flex flex-col justify-center">
         <div className="flex md:flex-row flex-col  justify-between items-center md:p-5">
 

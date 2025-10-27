@@ -31,8 +31,8 @@ const AboutPage = () => {
         />
       </div>
 
-      <div className="bg-white">
-        <div className="md:p-10 p-5">
+      <div className="bg-white md:px-16">
+        <div className=" p-5">
           <Content />
           <Clients />
           {/* <Projects /> */}
@@ -43,8 +43,8 @@ const AboutPage = () => {
           <Process />
           {/* <TurnoverChartWithControls/> */}
         </div>
-        <div className="relative w-full h-full md:mt-20">
-          {/* Gradient Overlay */}
+        {/* <div className="relative w-full h-full md:mt-20">
+
           <div
             className="absolute top-0 left-0 w-full h-full pointer-events-none"
             style={{
@@ -53,13 +53,13 @@ const AboutPage = () => {
             }}
           />
 
-          {/* Image */}
+    
           <Image
             src={AboutFooterImage || "/placeholder.svg"}
             alt="footer image"
             className="w-full h-full object-cover "
           />
-        </div>
+        </div> */}
       </div>
     </MainLayout>
   );

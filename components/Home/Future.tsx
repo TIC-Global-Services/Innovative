@@ -9,14 +9,18 @@ import image3 from "@/public/home/Future/3.png"
 
 const Future = () => {
   return (
-    <>
+    <div>
       <div className="flex justify-between items-center">
         <div className="text-[25px] md:text-[60px] md:leading:[64.8px] text-[#040444]">
           Shaping the Future
         </div>
         <div className="hidden sm:block md:block">
-        <ArrowBtn text="Let's talk" backgroundColor="#040444" textColor="white" href="/" />
-          
+          <ArrowBtn
+            text="Let's talk"
+            backgroundColor="#040444"
+            textColor="white"
+            href="/"
+          />
         </div>
       </div>
 
@@ -29,7 +33,7 @@ const Future = () => {
             alt="furniture"
             className="hidden md:block object-cover w-full h-full"
           />
-          
+
           {/* Mobile Image */}
           <Image
             src={image1m}
@@ -44,7 +48,8 @@ const Future = () => {
                 Interior Turnkey
               </h3>
               <p className="text-[11px] sm:text-sm md:text-base lg:text-md text-[#141414] xl:leading-relaxed">
-Delivering precision-built interiors with assured quality and on-time execution.
+                Delivering precision-built interiors with assured quality and
+                on-time execution.
               </p>
             </div>
           </div>
@@ -65,7 +70,8 @@ Delivering precision-built interiors with assured quality and on-time execution.
                   Furniture
                 </h3>
                 <p className="text-[11px] sm:text-sm md:text-base lg:text-md text-[#141414] xl:leading-relaxed">
-Factory-made furniture built for durability, comfort, and lasting finish.
+                  Factory-made furniture built for durability, comfort, and
+                  lasting finish.
                 </p>
               </div>
             </div>
@@ -84,14 +90,15 @@ Factory-made furniture built for durability, comfort, and lasting finish.
                   Civil construction
                 </h3>
                 <p className="text-[11px] sm:text-sm md:text-base lg:text-[14px] text-[#141414] xl:leading-relaxed">
-Reliable civil execution with structural accuracy and timely delivery.
+                  Reliable civil execution with structural accuracy and timely
+                  delivery.
                 </p>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -15,13 +15,13 @@ const ServicePage = () => {
       title="Our Service"
       description="From concept to completion, we offer end-to-end interior and construction solutions tailored to your needs blending design, functionality, and craftsmanship every step of the way."
     >
-      <div className="bg-[#FFFFFF]">
-        <div className="p-10">
+      <div className="md:px-16">
+        <div className="p-5 mt-20 md:mt-0">
           <OurServices />
           <ServicesSection />
           <Work />
         </div>
-        <div className="p-5">
+        <div className="p-5 pb-20">
           <Transform />
         </div>
         {/* <Image
@@ -31,7 +31,7 @@ const ServicePage = () => {
         /> */}
       </div>
     </MainLayout>
-  )
+  );
 }
 
 export default ServicePage

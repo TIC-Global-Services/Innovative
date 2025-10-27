@@ -13,7 +13,7 @@ const ContactPage = () => {
      title="Contact us"
     description="Have a project in mind or a question for our team? We’re here to help reach out and let’s start the conversation."
     >
-      <div className="bg-white overflow-x-hidden">
+      <div className=" overflow-x-hidden md:px-16">
         <div className="p-5">{/* Content starts after hero section */}</div>
         <Appoinment />
         <Faq />

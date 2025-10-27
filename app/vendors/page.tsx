@@ -18,21 +18,22 @@ const VendorsPage = () => {
       title="Our trusted vendor network"
       description="We collaborate with a reliable network of vendors who share our values of quality, integrity, and timely delivery—ensuring excellence in every project."
     >
-      <div className="bg-white">
+      <div className=" md:px-16">
         <div className="p-5">
           <Partner />
           <WhyPartner />
           <Faq />
         </div>
-          <VendorRegistration />
+
         {/* <Image
           src={VendorBottomImg || "/placeholder.svg"}
           alt="Footer Image"
           className="w-full md:h-full object-cover h-[600px]"
         /> */}
       </div>
+      <VendorRegistration />
     </MainLayout>
-  )
+  );
 }
 
 export default VendorsPage

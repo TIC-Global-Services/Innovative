@@ -22,7 +22,6 @@ const managementTeam: TeamMember[] = [
     title: "Managing Director",
     image: "/About/Directors/pandian.png",
     bio: "With nearly 20 years of experience in turnkey interior contracting, Pandian Kailasam has led Innovative Interiors to become one of South India's most trusted names in high-end interiors. His uncompromising focus on quality, detailing, and timely delivery has earned the company strong relationships with leading architects, developers, and brands across hospitality, retail, healthcare, corporate, and residential sectors. Pandian's vision blends craftsmanship with modern execution. He is known for translating an architect's design intent into reality with precision, while building long-lasting partnerships with clients and vendors. Under his leadership, Innovative Interiors has completed landmark projects for groups like GRT, ITC, Brigade, Appaswamy, and many more, while nurturing a team culture that values resilience, collaboration, and continuous innovation.",
-   
   },
   {
     id: 2,
@@ -30,7 +29,6 @@ const managementTeam: TeamMember[] = [
     title: "Chief Executive Officer",
     image: "/About/Directors/nandha.jpg",
     bio: "With over three decades of expertise in construction management and business development, Mr. Nandakrishnan has delivered 8+ million sq. ft. of projects across India. Previously Director at Ocean Lifespace, he led landmark industrial and commercial developments for global brands. At Innovative Interiors, he is driving the shift towards a process-driven, organized contracting company, strengthening execution across civil, MEP, and interiors.",
-   
   },
   {
     id: 3,
@@ -38,7 +36,6 @@ const managementTeam: TeamMember[] = [
     title: "Director – Administration, Finance & HR",
     image: "/About/Directors/devi.jpeg",
     bio: "Mrs. Devi Pandian is a key pillar of Innovative Interiors, balancing personal and professional roles with dedication. As head of Administration, HR, and Finance, she ensures smooth operations, financial discipline, and a motivated team. Her sharp eye for detail, structured approach, and commitment to transparency have been vital in upholding the company's culture and long-term vision.",
-   
   },
 ];
 
@@ -55,15 +52,43 @@ const ManagementTeam = () => {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (selectedMember) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [selectedMember]);
+
+  // Track scroll position for dot indicator
+  useEffect(() => {
+    const handleScroll = () => {
+      if (scrollRef.current && isMobile) {
+        const scrollLeft = scrollRef.current.scrollLeft;
+        const cardWidth = scrollRef.current.offsetWidth;
+        const newIndex = Math.round(scrollLeft / cardWidth);
+        setActiveIndex(newIndex);
+      }
+    };
+
+    const scrollElement = scrollRef.current;
+    if (scrollElement) {
+      scrollElement.addEventListener("scroll", handleScroll);
+      return () => scrollElement.removeEventListener("scroll", handleScroll);
+    }
+  }, [isMobile]);
+
   const scrollToIndex = (index: number) => {
     if (scrollRef.current) {
-      const cardWidth = 320;
-      const gap = 24;
+      const cardWidth = scrollRef.current.offsetWidth;
       scrollRef.current.scrollTo({
-        left: index * (cardWidth + gap),
+        left: index * cardWidth,
         behavior: "smooth",
       });
-      setActiveIndex(index);
     }
   };
 
@@ -80,7 +105,7 @@ const ManagementTeam = () => {
   };
 
   return (
-    <section className="relative py-24 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-white to-gray-50 overflow-hidden">
+    <section className="relative py-24 px-4 md:px-8 lg:px-16  overflow-hidden">
       {/* Background decoration */}
       <div className="absolute top-0 right-0 w-1/2 h-full opacity-5">
         <div className="absolute top-20 right-20 w-96 h-96 bg-[#0A0A50] rounded-full blur-3xl" />
@@ -93,9 +118,9 @@ const ManagementTeam = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-16"
+          className="md:mb-16 mb-6"
         >
-            <SectionLabel text="Leadership" />
+          <SectionLabel text="Leadership" />
           <h2 className="font-medium text-[18px] md:text-[60px] lg:text-[40px] text-[#040444] md:leading-[69.12px]  whitespace-nowrap">
             <span className="bg-gradient-to-r from-[#0A0A50] to-[#1a1a80] bg-clip-text text-transparent">
               Management
@@ -163,36 +188,19 @@ const ManagementTeam = () => {
         ) : (
           /* Mobile Carousel */
           <div className="relative">
-            {activeIndex > 0 && (
-              <button
-                onClick={handlePrev}
-                className="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors"
-              >
-                <ChevronLeft className="w-6 h-6 text-[#0A0A50]" />
-              </button>
-            )}
-
-            {activeIndex < managementTeam.length - 1 && (
-              <button
-                onClick={handleNext}
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors"
-              >
-                <ChevronRight className="w-6 h-6 text-[#0A0A50]" />
-              </button>
-            )}
-
             <div
               ref={scrollRef}
-              className="flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-8 px-4"
+              className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide md:px-4"
               style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
             >
               {managementTeam.map((member) => (
                 <div
                   key={member.id}
                   onClick={() => setSelectedMember(member)}
-                  className="min-w-[320px] snap-center"
+                  className="flex-shrink-0 snap-center pr-4 first:pl-0"
+                  style={{ width: "80vw" }}
                 >
-                  <div className="relative h-[500px] rounded-3xl overflow-hidden bg-white shadow-lg">
+                  <div className="relative h-[400px] rounded-3xl overflow-hidden bg-white shadow-lg">
                     <img
                       src={member.image}
                       alt={member.name}
@@ -203,9 +211,6 @@ const ManagementTeam = () => {
                       <h3 className="text-xl font-bold mb-2">{member.name}</h3>
                       <p className="text-sm text-blue-200 mb-3">
                         {member.title}
-                      </p>
-                      <p className="text-xs text-white/80 line-clamp-3">
-                        {member.bio}
                       </p>
                     </div>
                   </div>
@@ -238,14 +243,19 @@ const ManagementTeam = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+            className="fixed inset-0 z-50 md:flex items-center justify-center bg-black/80 backdrop-blur-sm hidden"
             onClick={() => setSelectedMember(null)}
+            style={{ padding: isMobile ? "0" : "1rem" }}
           >
             <motion.div
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
-              className="relative bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl"
+              className={`relative bg-white w-full overflow-hidden shadow-2xl ${
+                isMobile
+                  ? "h-full rounded-none"
+                  : "rounded-3xl max-w-4xl max-h-[90vh]"
+              }`}
               onClick={(e) => e.stopPropagation()}
             >
               <button
@@ -255,9 +265,17 @@ const ManagementTeam = () => {
                 <X className="w-6 h-6 text-white" />
               </button>
 
-              <div className="grid md:grid-cols-2 h-full">
+              <div
+                className={`h-full ${
+                  isMobile ? "flex flex-col" : "grid md:grid-cols-2"
+                }`}
+              >
                 {/* Image side */}
-                <div className="relative h-64 md:h-auto">
+                <div
+                  className={`relative ${
+                    isMobile ? "h-64 flex-shrink-0" : "h-64 md:h-auto"
+                  }`}
+                >
                   <img
                     src={selectedMember.image}
                     alt={selectedMember.name}
@@ -267,7 +285,11 @@ const ManagementTeam = () => {
                 </div>
 
                 {/* Content side */}
-                <div className="p-8 md:p-12 overflow-y-auto">
+                <div
+                  className={`overflow-y-auto ${
+                    isMobile ? "flex-1 p-6" : "p-8 md:p-12"
+                  }`}
+                >
                   <div className="mb-6">
                     <h3 className="text-3xl md:text-4xl font-bold text-[#0A0A50] mb-3">
                       {selectedMember.name}

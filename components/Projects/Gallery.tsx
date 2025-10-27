@@ -1232,7 +1232,7 @@ const Gallery = () => {
   };
 
   return (
-    <div className="">
+    <div className="pb-20">
       {/* Desktop tabs - visible only on md and above */}
       <div className="hidden md:flex md:flex-row flex-wrap justify-between md:gap-10 gap-5 w-full md:px-25 px-5 mb-[100px]">
         {title.map((item, index) => (

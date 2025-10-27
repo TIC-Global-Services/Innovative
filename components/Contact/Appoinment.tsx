@@ -298,7 +298,7 @@ const Appointment = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+    <div className="flex flex-col items-center justify-center w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 mt-20 md:mt-0">
       <div className=" mb-10 md:mb-16 md:mt-25 ">
         <h1 className="text-[#040444] text-3xl md:text-[60px] text-center">
           Let's Build Something Exceptional
@@ -567,7 +567,7 @@ const Appointment = () => {
         </div>
 
         {/* Contact Information Section */}
-        <div className="w-full lg:w-2/5 bg-[#040444] rounded-2xl p-6 md:p-8 lg:p-10 text-white">
+        <div className="w-full lg:w-2/5 bg-[#040444] rounded-2xl p-6 md:p-8 lg:p-10 text-white mt-5 lg:mt-0">
           <div className="space-y-8 md:space-y-12">
             <div>
               <h2 className="text-2xl md:text-3xl font-medium mb-3">Address</h2>

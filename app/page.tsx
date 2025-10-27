@@ -16,32 +16,18 @@ export default function Home() {
       heroImage={HomeImage}
       heroText="Turnkey Contracting |Civil Construction |Woodwork Mastery | Timeless Interiors"
     >
-      <div className="bg-white overflow-x-hidden mt-30">
-        <div className="p-5">
+      <div className="bg-white overflow-x-hidden mt-40 pb-20">
+        <div className="md:px-16 p-5">
           <VideoScrubber />
           <Clients />
         </div>
         <Production />
-        <div className="p-5">
+        <div className="md:px-16 p-5">
           <Service />
           <Stories />
           <Future />
         </div>
-        <div className="relative w-full h-full md:mt-20">
-          {/* Gradient Overlay */}
-          <div className="absolute top-0 left-0 w-full h-full pointer-events-none" style={{
-            background: "linear-gradient(180deg, #FFFFFF 3.76%, rgba(255, 255, 255, 0) 67.57%)"
-          }} />
-
-          {/* Image */}
-          <Image
-            src={HomeBottomImg || "/placeholder.svg"}
-            alt="footer image"
-            className="w-full h-full object-cover"
-          />
-        </div>
-
       </div>
     </MainLayout>
-  )
+  );
 }
