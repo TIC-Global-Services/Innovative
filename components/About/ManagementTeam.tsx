@@ -251,7 +251,7 @@ const ManagementTeam = () => {
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
-              className={`relative bg-white w-full overflow-hidden shadow-2xl ${
+              className={`relative bg-white w-full overflow-auto shadow-2xl ${
                 isMobile
                   ? "h-full rounded-none"
                   : "rounded-3xl max-w-4xl max-h-[90vh]"
@@ -260,9 +260,9 @@ const ManagementTeam = () => {
             >
               <button
                 onClick={() => setSelectedMember(null)}
-                className="absolute top-6 right-6 z-10 w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center hover:bg-white/20 transition-colors"
+                className="absolute top-1 right-1 z-10 w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center hover:bg-white/20 transition-colors"
               >
-                <X className="w-6 h-6 text-white" />
+                <X className="w-6 h-6 text-black" />
               </button>
 
               <div

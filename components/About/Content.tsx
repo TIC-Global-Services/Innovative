@@ -80,7 +80,7 @@ const Content = () => {
         <div className="flex flex-col justify-center">
           <p className="font-normal text-[14px] md:text-[20px] lg:text-left text-left xl:text-left text-[#393535]">
             Innovative Interiors is a leading turnkey contracting company specializing in architect designed - project
-            execution and fine woodworking. With over 19 years of experience, we've partnered with India's finest
+            execution and fine woodworking. With over 20 years of experience, we've partnered with India's finest
             architects and brands to bring spaces to life — from iconic 5-star hotels and super-specialty hospitals to
             luxury residences, corporate offices, and flagship retail outlets.
           </p>

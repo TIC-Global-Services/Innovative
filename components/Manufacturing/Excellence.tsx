@@ -148,6 +148,8 @@ useEffect(() => {
             loop
             playsInline
             preload="auto"
+  webkit-playsinline="true"
+      
           />
 
           {/* Mute/Unmute Button fixed to bottom-right of video */}
