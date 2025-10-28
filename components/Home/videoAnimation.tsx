@@ -129,7 +129,7 @@ const VideoAnimation: React.FC = () => {
       <div className="w-full xl:w-[80%] lg:w-[60%] h-[500px] sm:h-[400px] md:h-[700px] lg:h-[600px] xl:h-[600px] flex items-center justify-center">
         <canvas
           ref={canvasRef}
-          className="w-full h-full object-contain rounded-xl sm:rounded-2xl"
+          className="w-full h-full object-cover rounded-xl sm:rounded-2xl"
         />
       </div>
 
