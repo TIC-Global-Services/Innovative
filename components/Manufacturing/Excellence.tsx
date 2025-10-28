@@ -4,61 +4,33 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ExcellenceImage } from "../ReusableComponenets/Icons";
 import Image from "next/image";
-import { Volume2, VolumeX } from "lucide-react";
 import Commitment3mobile from "@/public/Manufacturer/Commitment3mobile.png";
 
 const Excellence = () => {
-  const [isMuted, setIsMuted] = useState(true);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isInView, setIsInView] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
+  
+  // Replace this with your actual YouTube video ID
+  const youtubeVideoId = "1LckJ2SwoEc";
 
-useEffect(() => {
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      if (entry.isIntersecting && videoRef.current) {
-        // Ensure muted before playing
-        videoRef.current.muted = true;
-        videoRef.current
-          .play()
-          .then(() => setIsPlaying(true))
-          .catch((error) => {
-            console.log("Autoplay prevented:", error);
-          });
-      } else if (videoRef.current && !videoRef.current.paused) {
-        videoRef.current.pause();
-        setIsPlaying(false);
-      }
-    },
-    { threshold: 0.5 }
-  );
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold: 0.5 }
+    );
 
-  if (sectionRef.current) {
-    observer.observe(sectionRef.current);
-  }
-
-  return () => {
     if (sectionRef.current) {
-      observer.unobserve(sectionRef.current);
+      observer.observe(sectionRef.current);
     }
-  };
-}, []);
 
-  const tryPlayVideoOnce = () => {
-    if (videoRef.current) {
-      videoRef.current
-        .play()
-        .then(() => setIsPlaying(true))
-        .catch((error) => console.log("Still can't play:", error));
-    }
-  };
-
-  const toggleMute = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !videoRef.current.muted;
-      setIsMuted(videoRef.current.muted);
-    }
-  };
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
 
   // Animation variants
   const videoVariants = {
@@ -134,59 +106,20 @@ useEffect(() => {
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
       >
-        {/* Video container with relative positioning */}
+        {/* YouTube iframe container */}
         <motion.div
-          className="relative w-full"
+          className="relative w-full aspect-video max-w-[1320px] mx-auto"
           whileHover={{ scale: 1.01 }}
           transition={{ duration: 0.3 }}
         >
-          <video
-            ref={videoRef}
-            src="/Manufacturer/manufacturing_10mb.mp4"
-            className="md:w-[1320px] md:h-[670px] object-cover rounded-xl"
-            muted={isMuted}
-            loop
-            playsInline
-            preload="auto"
-  webkit-playsinline="true"
-      
+          <iframe
+            className="w-full h-full rounded-xl"
+            src={`https://www.youtube.com/embed/${youtubeVideoId}?autoplay=${isInView ? 1 : 0}&mute=1&loop=1&playlist=${youtubeVideoId}&controls=1&modestbranding=1&rel=0`}
+            title="Manufacturing Excellence Video"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
           />
-
-          {/* Mute/Unmute Button fixed to bottom-right of video */}
-          <motion.button
-            onClick={toggleMute}
-            className="absolute bottom-4 right-4 bg-black/60 text-white p-2 rounded-full hover:bg-black/80 transition"
-            aria-label={isMuted ? "Unmute video" : "Mute video"}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            {isMuted ? <VolumeX size={22} /> : <Volume2 size={22} />}
-          </motion.button>
-
-          {/* Fallback play button if video doesn't autoplay */}
-          {!isPlaying && (
-            <motion.button
-              onClick={tryPlayVideoOnce}
-              className="absolute inset-0 flex items-center justify-center w-full h-full bg-black/30"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
-            >
-              <motion.svg
-                className="w-16 h-16 text-white"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                whileHover={{ scale: 1.2 }}
-                transition={{ duration: 0.3 }}
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                  clipRule="evenodd"
-                />
-              </motion.svg>
-            </motion.button>
-          )}
         </motion.div>
       </motion.div>
 
@@ -202,7 +135,7 @@ useEffect(() => {
         </motion.div>
 
         <motion.p
-          className="text-[14px]  px-5 mt-3 md:mt-1 md:text-[20px] md:leading-[42px] lg:leading-[32px] font-normal text-left md:text-center text-[#393535] lg:px-65"
+          className="text-[14px] px-5 mt-3 md:mt-1 md:text-[20px] md:leading-[42px] lg:leading-[32px] font-normal text-left md:text-center text-[#393535] lg:px-65"
           variants={paragraphVariants}
           initial="hidden"
           whileInView="visible"
