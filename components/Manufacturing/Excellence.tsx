@@ -13,50 +13,36 @@ const Excellence = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          // Video is in view, try to play it
-          if (videoRef.current) {
-            videoRef.current
-              .play()
-              .then(() => setIsPlaying(true))
-              .catch((error) => {
-                console.log("Autoplay prevented:", error);
-                // Fallback: try playing with user interaction
-                if (sectionRef.current) {
-                  sectionRef.current.addEventListener(
-                    "click",
-                    tryPlayVideoOnce,
-                    { once: true }
-                  );
-                }
-              });
-          }
-        } else {
-          // Video is out of view, pause it
-          if (videoRef.current && !videoRef.current.paused) {
-            videoRef.current.pause();
-            setIsPlaying(false);
-          }
-        }
-      },
-      {
-        threshold: 0.5,
+useEffect(() => {
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting && videoRef.current) {
+        // Ensure muted before playing
+        videoRef.current.muted = true;
+        videoRef.current
+          .play()
+          .then(() => setIsPlaying(true))
+          .catch((error) => {
+            console.log("Autoplay prevented:", error);
+          });
+      } else if (videoRef.current && !videoRef.current.paused) {
+        videoRef.current.pause();
+        setIsPlaying(false);
       }
-    );
+    },
+    { threshold: 0.5 }
+  );
 
+  if (sectionRef.current) {
+    observer.observe(sectionRef.current);
+  }
+
+  return () => {
     if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+      observer.unobserve(sectionRef.current);
     }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, []);
+  };
+}, []);
 
   const tryPlayVideoOnce = () => {
     if (videoRef.current) {

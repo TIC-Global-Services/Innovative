@@ -79,7 +79,7 @@ const ServicesSection = () => {
             {/* Service 6 */}
             <div className="space-y-3 text-center md:text-left">
               <h2 className="text-xl md:text-3xl font-bold text-[#0A0A50]">
-                Custom Furniture Manufacturer of customized modular & solid wood furniture
+            Manufacturer of customized modular & solid wood furniture
               </h2>
               <p className="text-gray-700 text-[14px] md:text-base  leading-relaxed">
                 We craft and supply bespoke furniture tailored to the uniqueness of each space — blending luxury

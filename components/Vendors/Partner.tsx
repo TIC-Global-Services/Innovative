@@ -19,7 +19,7 @@ const Partner = () => {
 
             <h2 className="text-[#040444] text-3xl md:text-[45px] leading-[1.1] font-semibold">
               Be a Trusted <br className="hidden lg:block" />
-              Vendora Partner
+              Vendor Partner
             </h2>
 
             <p className="text-[#252525] text-[14px] md:text-[20px] leading-relaxed">

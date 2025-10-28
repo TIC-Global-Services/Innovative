@@ -19,7 +19,7 @@ export default function Home() {
       heroText="Turnkey Contracting |Civil Construction |Woodwork Mastery | Timeless Interiors"
     >
       <div className="bg-white overflow-x-hidden mt-40 pb-20">
-        <div className="md:px-16 p-5">
+        <div className="px-5">
           <VideoAnimation />
           <Clients />
          

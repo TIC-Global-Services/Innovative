@@ -134,7 +134,7 @@ const ManagementTeam = () => {
 
         {/* Desktop Grid */}
         {!isMobile ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {managementTeam.map((member, index) => (
               <motion.div
                 key={member.id}
@@ -146,7 +146,7 @@ const ManagementTeam = () => {
               >
                 <div
                   onClick={() => setSelectedMember(member)}
-                  className="relative h-[500px] rounded-3xl overflow-hidden cursor-pointer bg-white shadow-lg hover:shadow-2xl transition-all duration-500"
+                  className="relative h-[500px] rounded-3xl overflow-auto cursor-pointer bg-white shadow-lg hover:shadow-2xl transition-all duration-500"
                 >
                   {/* Image */}
                   <div className="absolute inset-0">
@@ -243,7 +243,7 @@ const ManagementTeam = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 md:flex items-center justify-center bg-black/80 backdrop-blur-sm hidden"
+            className="fixed overflow-y-auto h-auto inset-0 z-50 md:flex items-center justify-center bg-black/80 backdrop-blur-sm hidden"
             onClick={() => setSelectedMember(null)}
             style={{ padding: isMobile ? "0" : "1rem" }}
           >
@@ -287,11 +287,11 @@ const ManagementTeam = () => {
                 {/* Content side */}
                 <div
                   className={`overflow-y-auto ${
-                    isMobile ? "flex-1 p-6" : "p-8 md:p-12"
+                    isMobile ? "flex-1 p-6" : "p-8 lg:py-5 lg:px-5"
                   }`}
                 >
-                  <div className="mb-6">
-                    <h3 className="text-3xl md:text-4xl font-bold text-[#0A0A50] mb-3">
+                  <div className="">
+                    <h3 className="text-3xl md:text-4xl font-bold text-[#0A0A50] mb-1">
                       {selectedMember.name}
                     </h3>
                     <p className="text-lg text-blue-600 font-medium mb-4">

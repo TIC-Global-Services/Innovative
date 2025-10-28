@@ -123,10 +123,10 @@ const VideoAnimation: React.FC = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full min-h-screen flex flex-col lg:flex-row justify-center items-center py-6 sm:py-8 md:py-10 lg:py-0 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 gap-6 sm:gap-8 lg:gap-0"
+      className="relative w-full min-h-screen flex flex-col lg:flex-row justify-center items-center py-6 sm:py-8 md:py-10 lg:py-0 px-4 "
     >
       {/* Canvas Container - Left Side */}
-      <div className="w-full lg:w-[60%] h-[500px] sm:h-[400px] md:h-[700px] lg:h-[600px] xl:h-[700px] flex items-center justify-center">
+      <div className="w-full xl:w-[80%] lg:w-[60%] h-[500px] sm:h-[400px] md:h-[700px] lg:h-[600px] xl:h-[600px] flex items-center justify-center">
         <canvas
           ref={canvasRef}
           className="w-full h-full object-contain rounded-xl sm:rounded-2xl"
@@ -134,7 +134,7 @@ const VideoAnimation: React.FC = () => {
       </div>
 
       {/* Content Container - Right Side */}
-      <div className="w-full lg:w-[40%] flex flex-col items-center lg:items-start gap-4 sm:gap-5 md:gap-6 lg:gap-8 lg:pl-8 xl:pl-16">
+      <div className="w-full lg:w-[30%] flex flex-col items-center lg:items-start gap-4 sm:gap-5 md:gap-6 lg:gap-8 lg:pl-8 xl:pl-16">
         {/* Desktop Content */}
         <div className="hidden md:flex flex-col gap-3 lg:gap-4 w-full">
           <div>

@@ -677,7 +677,7 @@ export const spa = 'https://ik.imagekit.io/2eskrzmnx/retail/Mask%20group%20(49).
 
 
 //Industrial
-// export  industry from  "@/public/Gallery/Industrial/image1.jpg" 
+export {default as industry} from  "@/public/Gallery/Industrial/image1.jpg" 
 
 
 // slider

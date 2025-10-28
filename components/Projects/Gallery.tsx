@@ -480,6 +480,7 @@ import {
   micro9,
   logo15,
   logo14,
+  industry,
 } from "../ReusableComponenets/Icons";
 import Image, { type StaticImageData } from "next/image";
 // @ts-ignore
@@ -1177,50 +1178,11 @@ const Gallery = () => {
     ],
     Industrial: [
       {
-        image: GalleryImage3,
-        title: "GRT Hotels & Resorts",
-        sliderImages: [GalleryImage3, GalleryImage3, GalleryImage3],
+        image: industry,
+        title: "Factory",
+        sliderImages: [industry],
       },
-      {
-        image: GalleryImage4,
-        title: "ITC Vellore",
-        sliderImages: [GalleryImage4, GalleryImage4, GalleryImage4],
-      },
-      {
-        image: GalleryImage5,
-        title: "Radisson Blu",
-        sliderImages: [GalleryImage5, GalleryImage5, GalleryImage5],
-      },
-      {
-        image: GalleryImage3,
-        title: "GRT Hotels & Resorts",
-        sliderImages: [GalleryImage3, GalleryImage3, GalleryImage3],
-      },
-      {
-        image: GalleryImage4,
-        title: "ITC Vellore",
-        sliderImages: [GalleryImage4, GalleryImage4, GalleryImage4],
-      },
-      {
-        image: GalleryImage5,
-        title: "Radisson Blu",
-        sliderImages: [GalleryImage5, GalleryImage5, GalleryImage5],
-      },
-      {
-        image: GalleryImage3,
-        title: "GRT Hotels & Resorts",
-        sliderImages: [GalleryImage3, GalleryImage3, GalleryImage3],
-      },
-      {
-        image: GalleryImage4,
-        title: "ITC Vellore",
-        sliderImages: [GalleryImage4, GalleryImage4, GalleryImage4],
-      },
-      {
-        image: GalleryImage5,
-        title: "Radisson Blu",
-        sliderImages: [GalleryImage5, GalleryImage5, GalleryImage5],
-      },
+      
     ],
   };
 
