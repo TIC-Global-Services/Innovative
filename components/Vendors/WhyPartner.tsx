@@ -4,10 +4,10 @@ import PartnerImage from "@/public/Bike scene 10.png"
 
 const WhyPartner = () => {
   return (
-    <div className="container mx-auto md:px-4 mt-40">
+    <div className="container mx-auto md:px-4 lg:mt-40 md:mt-20">
       <section className="flex flex-col justify-center items-center py-10">
         <div className="flex flex-col justify-center items-center space-y-5 w-full mb-10">
-          <h2 className="text-3xl md:text-[60px] text-center md:text-left text-[#040444] md:leading-[69.12px] leading-tight font-medium">
+          <h2 className="text-2xl md:text-[45px] text-center md:text-left text-[#040444] md:leading-[69.12px] leading-tight font-medium">
             Partner with us to supply at scale
           </h2>
         </div>

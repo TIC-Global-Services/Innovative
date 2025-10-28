@@ -60,7 +60,7 @@ const Content = () => {
           <SectionLabel text="EVERYONE SAYS"/>
         </div> */}
 
-        <div className="flex flex-col items-start  w-full xl:items-start md:w-auto space-y-5 md:px-0">
+        <div className="flex flex-col items-start  w-full xl:items-start md:w-auto space-y-5 lg:px-0 md:px-5">
           <motion.div variants={headingVariants}>
             <p className="text-3xl md:text-[45px] xl:leading-[55px] text-left xl:text-start lg:text-start text-[#040444] font-medium">
               Innovative Interiors: Where Design Meets Manufacturing Excellence

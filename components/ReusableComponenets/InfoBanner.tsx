@@ -49,7 +49,7 @@ export default function InfoBanner({
   return (
     <div className={`md:mt-40 mt-10 relative ${className}`} style={{ height }}>
       {/* Background Image with Overlay */}
-      <div className="relative w-full aspect-[16/9] md:aspect-[21/9]">
+      <div className="relative w-full aspect-[16/9] lg:aspect-[21/9]">
         <Image
           src={backgroundImage || "/placeholder.svg"}
           alt={heading}
@@ -64,7 +64,7 @@ export default function InfoBanner({
       </div>
 
       {/* Content - Centered Text */}
-      <div className="absolute inset-0 md:-top-35 -top-8 flex flex-col items-center justify-center -space-y-5 md:space-y-8 z-10 px-4 md:px-12">
+      <div className="absolute inset-0 lg:-top-35 md:-top-15 -top-8 flex flex-col items-center justify-center -space-y-5 md:space-y-8 z-10 px-4 md:px-12">
         {heading && (
           <p className="text-[15px] md:text-[55.91px] leading-[42px] font-semibold text-center text-white">{heading}</p>
         )}
@@ -79,7 +79,7 @@ export default function InfoBanner({
       {/* Button - Positioned at Bottom */}
       {buttonText && (
         <Link href={buttonUrl} className="cursor-pointer" onClick={handleClick}>
-          <div className="absolute md:bottom-35 bottom-5 flex-row flex justify-center items-center w-full hover:scale-105 transition-all duration-300 z-20">
+          <div className="absolute lg:bottom-35 bottom-5 flex-row flex justify-center items-center w-full hover:scale-105 transition-all duration-300 z-20">
             <button className="md:px-8 px-4 md:py-3 py-1 text-[#040444] bg-white rounded-full cursor-pointer whitespace-nowrap">
               {buttonText}
             </button>

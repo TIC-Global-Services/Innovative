@@ -101,7 +101,7 @@ const Tower = () => {
   };
 
   return (
-    <div className="mx-auto max-w-7xl w-full md:px-0">
+    <div className="mx-auto max-w-7xl w-full px-4 sm:px-6 md:px-8 lg:px-0">
       <motion.div
         className="flex flex-col items-center space-y-1 w-full"
         variants={containerVariants}
@@ -117,21 +117,22 @@ const Tower = () => {
               backgroundColor: "rgba(4, 4, 68, 0.02)",
               transition: { duration: 0.3 },
             }}
-            className={`flex md:flex-row flex-col items-start md:items-center justify-between w-full md:h-[253px] h-auto md:px-6 transition-colors duration-300 ${
+            className={`flex lg:flex-row flex-col items-start lg:items-center justify-between w-full lg:h-[253px] h-auto py-6 sm:py-8 lg:py-0 px-4 sm:px-6 md:px-8 lg:px-6 transition-colors duration-300 ${
               index < steps.length - 1 ? "border-b border-[#000000]" : ""
             }`}
           >
             {/* Text Column */}
-            <div className="flex md:flex-row md:py-0 py-6 flex-col items-start md:items-center w-full text-[#040444]">
-              <div className="flex items-start md:items-center md:space-x-16 space-x-4 mb-3 md:mb-0">
+            <div className="flex lg:flex-row flex-col items-start lg:items-center w-full text-[#040444]">
+              {/* Number and Title Row */}
+              <div className="flex items-start lg:items-center space-x-3 sm:space-x-4 md:space-x-8 lg:space-x-16 mb-3 sm:mb-4 lg:mb-0 w-full lg:w-auto">
                 <motion.span
-                  className="text-left md:text-center text-[20px] md:text-[40px] font-bold min-w-[40px] md:min-w-[60px]"
+                  className="text-left lg:text-center text-[24px] sm:text-[28px] md:text-[36px] lg:text-[40px] font-bold min-w-[32px] sm:min-w-[40px] md:min-w-[50px] lg:min-w-[60px] flex-shrink-0"
                   variants={numberVariants}
                 >
                   {step.number}
                 </motion.span>
                 <motion.span
-                  className="text-left md:font-medium font-semibold text-[18px] md:text-[35px] md:w-90 leading-tight"
+                  className="text-left font-semibold lg:font-medium text-[16px] sm:text-[18px] md:text-[24px] lg:text-[35px] leading-tight flex-1 lg:flex-none lg:w-[400px] xl:w-[450px]"
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
@@ -141,8 +142,9 @@ const Tower = () => {
                 </motion.span>
               </div>
 
+              {/* Description */}
               <motion.span
-                className="text-[#393535] text-left md:text-left text-[15px] md:text-[20px] font-light md:ml-20 leading-relaxed"
+                className="text-[#393535] text-left text-[14px] sm:text-[15px] md:text-[17px] lg:text-[20px] font-light lg:ml-12 xl:ml-20 leading-relaxed w-full lg:w-auto lg:flex-1"
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}

@@ -142,7 +142,7 @@ const Excellence = () => {
     <div>
       <motion.div
         ref={sectionRef}
-        className="relative items-center p-5 md:p-20 md:space-y-10 space-y-5 md:mt-40 mt-10 mb-10"
+        className="relative items-center p-5 lg:p-20 md:space-y-10 space-y-5 md:mt-40 mt-10 mb-10"
         variants={videoVariants}
         initial="hidden"
         whileInView="visible"
@@ -202,9 +202,9 @@ const Excellence = () => {
         </motion.div>
       </motion.div>
 
-      <div className="w-full mt-[10px] md:mt-30 md:px-0">
+      <div className="w-full mt-[10px] md:mt-30 lg:px-0 md:px-5">
         <motion.div
-          className="text-left md:text-center text-3xl lg:text-[40px] md:text-[60px] text-[#040444] font-medium"
+          className="text-left md:text-center text-3xl lg:text-[40px] md:text-[60px] text-[#040444] font-medium lg:px-0 md:px-5 px-5"
           variants={headingVariants}
           initial="hidden"
           whileInView="visible"
@@ -214,7 +214,7 @@ const Excellence = () => {
         </motion.div>
 
         <motion.p
-          className="text-[14px] mt-3 md:mt-1 md:text-[20px] md:leading-[42px] lg:leading-[32px] font-normal text-left md:text-center text-[#393535] md:px-65"
+          className="text-[14px]  px-5 mt-3 md:mt-1 md:text-[20px] md:leading-[42px] lg:leading-[32px] font-normal text-left md:text-center text-[#393535] lg:px-65"
           variants={paragraphVariants}
           initial="hidden"
           whileInView="visible"
@@ -228,7 +228,7 @@ const Excellence = () => {
       </div>
 
       <motion.div
-        className="md:mt-20 mt-10"
+        className="lg:mt-20 mt-10"
         variants={imageVariants}
         initial="hidden"
         whileInView="visible"
@@ -237,12 +237,12 @@ const Excellence = () => {
         <Image
           src={ExcellenceImage}
           alt="excellence"
-          className="w-full object-cover h-full rounded-lg md:rounded-none md:block hidden"
+          className="w-full object-contain h-full rounded-lg md:rounded-none md:block hidden"
         />
         <Image
           src={Commitment3mobile}
           alt="excellence"
-          className="w-full object-cover h-full rounded-lg md:rounded-none md:hidden block"
+          className="w-full object-contain h-full rounded-lg md:rounded-none md:hidden block"
         />
       </motion.div>
     </div>

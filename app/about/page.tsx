@@ -31,8 +31,8 @@ const AboutPage = () => {
         />
       </div>
 
-      <div className="bg-white md:px-16">
-        <div className=" p-5">
+      <div className="bg-white lg:px-16">
+        <div className=" lg:p-5">
           <Content />
           <Clients />
           {/* <Projects /> */}

@@ -7,7 +7,6 @@ import Image from "next/image"
 import MainLayout from "@/components/Layouts/MainLayout"
 import CareerBanner from "@/public/CareerBanner.png";
 import CareerCards from "@/components/Careers/CareerCards"
-import { CareerFooter } from "@/components/ReusableComponenets/Icons"
 
 const CareersPage = () => {
   return (

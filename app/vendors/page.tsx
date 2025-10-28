@@ -18,7 +18,7 @@ const VendorsPage = () => {
       title="Our trusted vendor network"
       description="We collaborate with a reliable network of vendors who share our values of quality, integrity, and timely delivery—ensuring excellence in every project."
     >
-      <div className=" md:px-16">
+      <div className=" lg:px-16">
         <div className="p-5">
           <Partner />
           <WhyPartner />

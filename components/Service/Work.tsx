@@ -47,7 +47,7 @@ const Work = () => {
   ];
 
   return (
-    <div className="md:mt-[150px] mt-20  mb-10">
+    <div className="lg:mt-[150px] mt-20  mb-10">
       <div className="flex flex-col md:space-y-8 space-y-0 items-center md:max-h-[600px]">
         <SectionLabel text="HOW WE WORK"/>
 
@@ -56,12 +56,12 @@ const Work = () => {
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row justify-center items-center gap-12">
+      <div className="flex flex-col lg:flex-row justify-center items-center gap-12">
         <div className="flex-1">
           <Image src={Imagestair} alt="image"  className="w-full h-full object-cover md:max-h-[500px]-[400px] h"/>
         </div>
 
-        <div className="flex-1 flex flex-col gap-3">
+        <div className="flex-1 w-full flex flex-col gap-3">
           {workSteps.map((step, index) => (
             <div key={index} className="transition-all duration-300">
               <div

@@ -1234,7 +1234,7 @@ const Gallery = () => {
   return (
     <div className="pb-20">
       {/* Desktop tabs - visible only on md and above */}
-      <div className="hidden md:flex md:flex-row flex-wrap justify-between md:gap-10 gap-5 w-full md:px-25 px-5 mb-[100px]">
+      <div className="hidden lg:flex lg:flex-row flex-wrap justify-between lg:gap-10 gap-5 w-full lg:px-25 px-5 mb-[100px]">
         {title.map((item, index) => (
           <div key={index} className="flex flex-row flex-grow md:gap-2">
             <h2
@@ -1302,7 +1302,7 @@ const Gallery = () => {
         ))}
       </div>
 
-      <div className="grid md:grid-cols-3 grid-cols-1 gap-12 md:mt-4 mt-1">
+      <div className="grid lg:grid-cols-3 grid-cols-1 gap-12 md:mt-4 mt-1">
         {imagesToShow.map((item, index) => (
           <div key={index} className="flex flex-col items-center">
             <Image

@@ -15,7 +15,7 @@ const ManufacturingPage = () => {
       heroImage={ManufacturingBanner}
       heroText="Manufacturing Excellence At Innovative Interiors"
     >
-      <div className="md:px-16 pb-20">
+      <div className="lg:px-16 pb-20">
         <div className="p-5 mt-20">
           <Content />
           <Tower />

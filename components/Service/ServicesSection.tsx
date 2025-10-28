@@ -3,7 +3,7 @@ import { Interior } from "../ReusableComponenets/Icons";
 
 const ServicesSection = () => {
   return (
-    <div className="w-full  md:mt-36 mt-5   mx-auto">
+    <div className="w-full  lg:mt-36 mt-5   mx-auto">
       <div className="flex flex-col lg:flex-row">
         {/* Left Column */}
         <div className="w-full lg:w-[45%] lg:pr-8 py-8">

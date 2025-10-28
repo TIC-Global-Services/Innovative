@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import SectionLabel from "../ui/secionLabel";
 
 const TeamStrength = () => {
@@ -11,7 +11,7 @@ const TeamStrength = () => {
   // Check if we're on mobile
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+      setIsMobile(window.innerWidth < 1024);
     };
 
     // Initial check
@@ -120,7 +120,7 @@ const TeamStrength = () => {
   };
 
   return (
-    <div className="w-full py-10 px-4 text-black text-center min-h-[50vh] md:min-h-[80vh] flex flex-col items-center justify-center">
+    <div className="w-full py-10 px-4 text-black text-center min-h-[50vh] md:min-h-[40vh] lg:min-h-[80vh] flex flex-col items-center justify-center">
       <div className="flex flex-col gap-5 items-center justify-center w-full max-w-7xl mx-auto">
         <motion.div
           variants={labelVariants}

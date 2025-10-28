@@ -376,7 +376,7 @@ const Process: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col items-start mb-5 sm:mb-5 md:mb-5 mt-30">
+    <div className="flex flex-col items-start mb-5 sm:mb-5 md:mb-5 mt-30 lg:px-0 md:px-5 px-5">
       <div className="flex flex-col space-y-4 items-start w-full">
         <SectionLabel text="OUR STRENGHTS"/>
         <p className="font-medium text-[18px] md:text-[60px] lg:text-[40px] text-[#040444] md:leading-[69.12px] text-center whitespace-nowrap">
@@ -384,7 +384,7 @@ const Process: React.FC = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 w-full mx-auto md:mt-10 mt-5 mb-20 h-screen">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 w-full mx-auto md:mt-10 mt-5 mb-20 h-screen">
         {/* Content Slider */}
         <div 
           className={`w-full md:h-[90%]  rounded-[15.79px] bg-[#F1F1FE] relative overflow-hidden touch-pan-y select-none ${

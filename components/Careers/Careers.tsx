@@ -26,7 +26,7 @@ const Careers = () => {
   ];
 
   return (
-    <div className='bg-white md:mt-[100px] mt-20'>
+    <div className='bg-white lg:mt-[100px] mt-20'>
       <div className="flex flex-col space-y-3 items-center w-full  ">
         <div className="bg-[#F8F8F8] h-[30px] w-[140px] flex justify-center items-center font-medium text-[#141414] text-[11.81px] rounded-[8px] whitespace-nowrap">
           <ul className="list-disc pl-5 text-center whitespace-nowrap">
@@ -40,7 +40,7 @@ const Careers = () => {
         </div>
       </div>
 
-      <div className='flex flex-col md:flex-row justify-around items-center mt-8  md:mt-15 px-4'>
+      <div className='flex flex-col md:flex-row justify-around items-center mt-8  lg:mt-15 px-4'>
         {
           contents.map((content, index) => (
             <div key={index} className='flex flex-col space-y-5 items-center justify-center w-full md:w-[30%] text-center mb-10'>

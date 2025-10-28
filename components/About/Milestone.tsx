@@ -83,7 +83,7 @@ const Milestone = () => {
 
       {/* Mobile Image */}
       <motion.div
-        className="block sm:hidden md:hidden mt-6 px-4"
+        className="block lg:hidden mt-6 px-4"
         variants={imageVariants}
         initial="hidden"
         whileInView="visible"
@@ -99,7 +99,7 @@ const Milestone = () => {
         />
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 px-4 md:px-20 max-w-8xl mx-auto mt-8 md:mt-15">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8 px-0 md:px-20 max-w-8xl mx-auto mt-8 md:mt-15">
         {/* Left Column */}
         <motion.div
           className="flex flex-col space-y-4 md:space-y-10 justify-center items-center md:items-center"
@@ -135,7 +135,7 @@ const Milestone = () => {
 
         {/* Desktop Image */}
         <motion.div
-          className="hidden sm:block md:block"
+          className="hidden lg:block"
           variants={imageVariants}
           initial="hidden"
           whileInView="visible"

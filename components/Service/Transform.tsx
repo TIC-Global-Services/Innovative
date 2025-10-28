@@ -51,9 +51,9 @@ import Link from 'next/link';
     
   return (
     <div className='bg-white'>
-      <section className="md:mb-[150px] md:mb-[80px]">
-        <div className="items-center flex flex-col space-y-5 md:mt-50">
-          <h2 className="text-3xl md:text-[60px] font-medium md:leading-[64px] text-center text-[#040444]">
+      <section className="md:mb-[150px] ">
+        <div className="items-center flex flex-col space-y-5 lg:mt-50">
+          <h2 className="text-3xl md:text-[40px] xl:text-[60px] font-medium md:leading-[64px] text-center text-[#040444]">
           Brands that Took Our Turnkey <br className="hidden md:block" /> Fit-out Service
           </h2>
           <div className="relative overflow-hidden w-full max-w-5xl h-[100px] bg-white mx-auto fade-mask mt-15">
@@ -83,10 +83,10 @@ import Link from 'next/link';
         <div className="md:mt-40 mt-10 relative md:h-[560px] h-[250px]">
           <Image src={TransformImage} alt={"Transform"} className="w-full h-full  object-cover" />
           <div className="absolute inset-0 md:-top-35 -top-8 flex flex-col items-center justify-center -space-y-5 md:space-y-8 z-10">
-            <p className="text-[15px] md:text-[55.91px] leading-[42px] font-semibold text-center text-white">
+            <p className="text-[15px] md:text-[55.91px] md:leading-[54px] font-semibold text-center text-white">
               Transform Your Space with Us
             </p>
-            <p className="text-[12px] mt-3  md:text-[25.92px] font-light md:leading-[42px] text-center text-[#F3F3F3] md:mt-1">
+            <p className="text-[12px] mt-3  md:text-[25.92px] font-light md:leading-[42px] text-center text-[#F3F3F3] md:mt-1 max-w-2xl">
               Start your journey toward modern, functional, and inspiring
               interiors today.
             </p>

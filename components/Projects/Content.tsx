@@ -3,9 +3,9 @@ import SectionLabel from "../ui/secionLabel";
 
 const Content = () => {
   return (
-    <div className="md:mb-40 mb-10 mt-20 md:mt-0">
+    <div className="md:mb-40 mb-10 mt-20 lg:mt-0  md:mt-50">
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 xl:gap-12 mt-10 md:mt-20 lg:mt-30">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8 xl:gap-12 mt-10 md:mt-20 lg:mt-30">
         {/* Left Column */}
         <div className="flex flex-col space-y-5 items-center xl:items-start">
           <SectionLabel text="OUR VISION" />

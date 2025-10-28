@@ -1,221 +1,188 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
+import { useEffect, useRef } from "react";
 import SectionLabel from "../ui/secionLabel";
 import ArrowBtn from "../ui/arrowBtn";
-
-// Register plugin once at module level
-if (typeof window !== 'undefined') {
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
+
+
 const VideoAnimation: React.FC = () => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const scrollTriggerRef = useRef<ScrollTrigger | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const contextRef = useRef<CanvasRenderingContext2D | null>(null);
+  const sectionRef = useRef<HTMLElement | null>(null);
+
+  const totalFrames = 180;
+  const currentFrame = (index: number) =>
+    `/Inno/frame_${(index + 1).toString().padStart(4, '0')}.webp`;
+
+  const images: HTMLImageElement[] = [];
+  const imgSeq = { frame: 0 };
+
   
-  const [isMobile, setIsMobile] = useState<boolean>(false);
-  const [videoReady, setVideoReady] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>(false);
-
-  // Handle resize with proper debouncing
- useEffect(() => {
-  // ✅ Run only on client (guards against SSR)
-  if (typeof window === "undefined") return;
-
-  let resizeTimer: ReturnType<typeof setTimeout>;
-
-  const handleResize = (): void => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
-      const mobile = window.innerWidth < 768;
-      setIsMobile(mobile);
-    }, 150);
-  };
-
-  // ✅ Initialize once on mount
-  handleResize();
-
-  window.addEventListener("resize", handleResize, { passive: true });
-  return () => {
-    clearTimeout(resizeTimer);
-    window.removeEventListener("resize", handleResize);
-  };
-}, []);
-
-
-  // Main scroll animation effect
   useEffect(() => {
-    const video = videoRef.current;
-    const section = sectionRef.current;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const context = canvas.getContext("2d");
+    if (!context) return;
+    contextRef.current = context;
 
-    if (!video || !section) return;
-
-    const initAnimation = (): (() => void) => {
-      // Prepare video
-      video.muted = true;
-      video.playsInline = true;
-      video.preload = 'auto';
-      
-      const onLoadedMetadata = (): void => {
-        setVideoReady(true);
-        video.currentTime = 0;
-        
-        // Kill existing ScrollTrigger instances for this section
-        ScrollTrigger.getAll().forEach((st: ScrollTrigger) => {
-          if (st.vars.trigger === section) st.kill();
-        });
-
-        // Create ScrollTrigger with optimized settings
-        scrollTriggerRef.current = ScrollTrigger.create({
-          trigger: section,
-          start: 'top top',
-          end: isMobile ? '+=200%' : '+=150%',
-          pin: true,
-          scrub: true, // Boolean for instant response, no artificial delay
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-          onUpdate: (self) => {
-            if (video.duration && isFinite(video.duration)) {
-              // Direct update - no smoothing needed
-              video.currentTime = self.progress * (video.duration - 0.05);
-            }
-          }
-        });
-      };
-
-      const onError = (): void => {
-        console.error('Video failed to load');
-        setError(true);
-      };
-
-      if (video.readyState >= 2) {
-        onLoadedMetadata();
-      } else {
-        video.addEventListener('loadedmetadata', onLoadedMetadata, { once: true });
-        video.addEventListener('error', onError, { once: true });
-      }
-
-      // Cleanup
-      return (): void => {
-        if (scrollTriggerRef.current) {
-          scrollTriggerRef.current.kill();
-          scrollTriggerRef.current = null;
-        }
-        video.removeEventListener('loadedmetadata', onLoadedMetadata);
-        video.removeEventListener('error', onError);
-      };
+    // Set canvas size based on window size
+    const setCanvasSize = () => {
+      if (!canvas) return;
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      context.scale(dpr, dpr);
+      canvas.style.width = `${rect.width}px`;
+      canvas.style.height = `${rect.height}px`;
     };
 
-    const cleanup = initAnimation();
-    return cleanup;
-  }, [isMobile]);
+    setCanvasSize();
+    window.addEventListener('resize', setCanvasSize);
 
-  // Refresh ScrollTrigger on layout changes
-  useEffect(() => {
-    if (videoReady) {
-      ScrollTrigger.refresh();
+    for (let i = 0; i < totalFrames; i++) {
+      const img = new Image();
+      img.src = currentFrame(i);
+      images.push(img);
     }
-  }, [videoReady]);
+
+    const render = () => {
+      const img = images[imgSeq.frame];
+      if (!img || !img.complete) return;
+      const canvas = canvasRef.current;
+      const context = contextRef.current;
+      if (!canvas || !context) return;
+
+      const canvasWidth = canvas.width / (window.devicePixelRatio || 1);
+      const canvasHeight = canvas.height / (window.devicePixelRatio || 1);
+      const imgWidth = img.naturalWidth || img.width;
+      const imgHeight = img.naturalHeight || img.height;
+
+      if (imgWidth === 0 || imgHeight === 0) return;
+
+      const scale = Math.max(canvasWidth / imgWidth, canvasHeight / imgHeight);
+
+      const x = canvasWidth / 2 - (imgWidth / 2) * scale;
+      const y = canvasHeight / 2 - (imgHeight / 2) * scale;
+
+      context.clearRect(0, 0, canvasWidth, canvasHeight);
+      context.drawImage(
+        img,
+        0,
+        0,
+        imgWidth,
+        imgHeight,
+        x,
+        y,
+        imgWidth * scale,
+        imgHeight * scale
+      );
+    };
+
+    images[0].onload = () => {
+      render();
+
+
+      // Timeline for sequential text animations
+     gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "+=10",
+          end: "+=3000",
+          scrub: 1,
+        },
+      });
+
+
+      // Canvas animation
+      gsap.to(imgSeq, {
+        frame: totalFrames - 1,
+        snap: "frame",
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "+=3500",
+          scrub: 1,
+          pin: true,
+        },
+        onUpdate: render,
+      });
+    };
+
+    return () => {
+      window.removeEventListener('resize', setCanvasSize);
+    };
+  }, []);
 
   return (
-    <>
-      
-
-      {/* Video Animation Section */}
-      <div
-        ref={sectionRef}
-        className="w-full min-h-screen flex flex-col md:flex-row justify-between items-center gap-5 md:gap-10 px-4 md:px-8 py-8 md:py-0 bg-white"
-      >
-        {/* Video Container */}
-        <div className="w-full md:w-[60%] relative">
-          {!videoReady && !error && (
-            <div className="absolute inset-0 flex items-center justify-center bg-gray-100 rounded-lg z-10">
-              <div className="flex flex-col items-center gap-2">
-                <div className="w-8 h-8 border-4 border-[#040444] border-t-transparent rounded-full animate-spin"></div>
-                <span className="text-sm text-gray-600">Loading video...</span>
-              </div>
-            </div>
-          )}
-
-          {error && (
-            <div className="absolute inset-0 flex items-center justify-center bg-gray-100 rounded-lg">
-              <span className="text-sm text-red-600">Failed to load video</span>
-            </div>
-          )}
-
-          <video
-            ref={videoRef}
-            muted
-            playsInline
-            preload="auto"
-            className="w-full h-[300px] md:h-[500px] object-cover rounded-lg "
-            style={{ 
-              transform: 'translateZ(0)',
-              willChange: 'auto'
-            }}
-          >
-            <source
-              src="/home/interior-gray-video.mp4"
-              type="video/mp4"
-            />
-            Your browser does not support the video tag.
-          </video>
-        </div>
-
-        {/* Content Container */}
-        <div className="w-full md:w-[40%] flex flex-col items-center md:items-start gap-5 md:gap-8">
-          {/* Desktop Content */}
-          <div className="hidden md:flex flex-col gap-4 w-full">
-            <div>
-            <SectionLabel text="WHAT WE DO" />
-            </div>
-            
-            <h2 className="text-[#040444] text-[45px] leading-[50px] font-medium">
-              Bringing Life Into<br />
-              Spaces
-            </h2>
-            
-            <p className="text-[#141414] text-[20px] leading-[28px]">
-              Over 1 million sft of Interior Furniture manufactured,<br />
-              Civil & Interior Fitout projects delivered.
-            </p>
-            
-            <ArrowBtn
-              text="View More"
-              backgroundColor="#040444"
-              textColor="white"
-              href="/manufacturing"
-            />
-          </div>
-
-          {/* Mobile Content */}
-          <div className="flex md:hidden flex-col items-center text-center gap-4 w-full">
-            <SectionLabel text="WHAT WE DO" />
-            
-            <h2 className="text-[#040444] text-[24px] leading-[32px] font-semibold">
-              Turning Vision Into Reality
-            </h2>
-            
-            <p className="text-[#191919] text-[14px] leading-[20px]">
-              Over 1 million sft of Interior Furniture manufactured
-            </p>
-            
-            <ArrowBtn
-              text="View More"
-              backgroundColor="#040444"
-              textColor="white"
-              href="/manufacturing"
-            />
-          </div>
-        </div>
+    <section
+      ref={sectionRef}
+      className="relative w-full min-h-screen flex flex-col lg:flex-row justify-center items-center py-6 sm:py-8 md:py-10 lg:py-0 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 gap-6 sm:gap-8 lg:gap-0"
+    >
+      {/* Canvas Container - Left Side */}
+      <div className="w-full lg:w-[60%] h-[500px] sm:h-[400px] md:h-[700px] lg:h-[600px] xl:h-[700px] flex items-center justify-center">
+        <canvas
+          ref={canvasRef}
+          className="w-full h-full object-contain rounded-xl sm:rounded-2xl"
+        />
       </div>
 
-     
-    </>
+      {/* Content Container - Right Side */}
+      <div className="w-full lg:w-[40%] flex flex-col items-center lg:items-start gap-4 sm:gap-5 md:gap-6 lg:gap-8 lg:pl-8 xl:pl-16">
+        {/* Desktop Content */}
+        <div className="hidden md:flex flex-col gap-3 lg:gap-4 w-full">
+          <div>
+            <SectionLabel text="WHAT WE DO" />
+          </div>
+
+          <h2 className="text-[#040444] text-[32px] lg:text-[38px] xl:text-[45px] leading-[38px] lg:leading-[44px] xl:leading-[50px] font-medium">
+            Bringing Life Into
+            <br />
+            Spaces
+          </h2>
+
+          <p className="text-[#141414] text-[16px] lg:text-[18px] xl:text-[20px] leading-[24px] lg:leading-[26px] xl:leading-[28px]">
+            Over 1 million sft of Interior Furniture manufactured,
+           
+            Civil & Interior Fitout projects delivered.
+          </p>
+
+          <ArrowBtn
+            text="View More"
+            backgroundColor="#040444"
+            textColor="white"
+            href="/manufacturing"
+          />
+        </div>
+
+        {/* Mobile Content */}
+        <div className="flex md:hidden flex-col items-center text-center gap-3 sm:gap-4 w-full">
+          <SectionLabel text="WHAT WE DO" />
+
+          <h2 className="text-[#040444] text-[22px] sm:text-[26px] leading-[28px] sm:leading-[34px] font-semibold">
+            Turning Vision Into Reality
+          </h2>
+
+          <p className="text-[#191919] text-[14px] sm:text-[15px] leading-[20px] sm:leading-[22px] max-w-[90%] sm:max-w-full">
+            Over 1 million sft of Interior Furniture manufactured
+          </p>
+
+          <ArrowBtn
+            text="View More"
+            backgroundColor="#040444"
+            textColor="white"
+            href="/manufacturing"
+          />
+        </div>
+      </div>
+    </section>
   );
 };
 
 export default VideoAnimation;
-

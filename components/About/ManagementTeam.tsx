@@ -105,7 +105,7 @@ const ManagementTeam = () => {
   };
 
   return (
-    <section className="relative py-24 px-4 md:px-8 lg:px-16  overflow-hidden">
+    <section className="relative py-24 px-4 md:px-5 lg:px-16  overflow-hidden">
       {/* Background decoration */}
       <div className="absolute top-0 right-0 w-1/2 h-full opacity-5">
         <div className="absolute top-20 right-20 w-96 h-96 bg-[#0A0A50] rounded-full blur-3xl" />

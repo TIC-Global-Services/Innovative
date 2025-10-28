@@ -1,36 +1,30 @@
 import React from "react";
+import Image from "next/image";
 import {
-  PartnerImage1,
-  PartnerImage2,
-  RightArrow,
-  RightColorArrow,
   venImage1,
   venImage2,
 } from "../ReusableComponenets/Icons";
-import Image from "next/image";
-import PartnerImage from "@/public/Frame 360.png";
 import SectionLabel from "../ui/secionLabel";
 import ArrowBtn from "../ui/arrowBtn";
 
 const Partner = () => {
   return (
-    <div className="md:mt-52 mt-40 md:mb-20">
-      <div className="flex flex-col justify-center">
-        <div className="flex md:flex-row flex-col  justify-between items-center md:p-5">
+    <section className="w-full md:mt-52 mt-40 md:mb-28 mb-20 px-4 md:px-10 lg:px-20">
+      <div className="flex flex-col gap-20">
+        {/* === Top Section === */}
+        <div className="flex flex-col lg:flex-row lg:items-center item-start justify-between gap-10 lg:gap-16">
+          {/* Left Text Block */}
+          <div className="flex flex-col justify-center items-start text-left w-full max-w-lg space-y-3 lg:space-y-5">
+            <SectionLabel text="EVERYONE SAYS" />
 
-          <div className="flex flex-col md:space-y-5 space-y-3 w-full text-left  md:justify-center  md:items-start md:text-left">
+            <h2 className="text-[#040444] text-3xl md:text-[45px] leading-[1.1] font-semibold">
+              Be a Trusted <br className="hidden lg:block" />
+              Vendora Partner
+            </h2>
 
-            <div className="">
-              <SectionLabel text="EVERYONE SAYS" />
-            </div>
-
-            <p className="text-3xl md:text-[45px]  text-left md:text-left text-[#040444] leading-[1.1] md:leading-[49.12px] mt-2 md:mt-0">
-              Be a Trusted   <br className="hidden md:block" />
-             Vendora Partner
-            </p>
-            <span className="md:text-[20px] text-[14px] text-left  text-[#252525] md:mt-0">
+            <p className="text-[#252525] text-[14px] md:text-[20px] leading-relaxed">
               Supplying Quality Materials for <br /> Exceptional Interiors.
-            </span>
+            </p>
 
             <ArrowBtn
               text="Contact us"
@@ -38,27 +32,44 @@ const Partner = () => {
               textColor="#000000"
             />
           </div>
-          <div className="md:w-[90%] w-full mt-6 md:mt-0">
-            <Image src={venImage1} alt={"alt"} className="w-full h-auto" />
+
+          {/* Right Image */}
+          <div className="w-full lg:w-[90%] flex justify-center">
+            <Image
+              src={venImage1}
+              alt="Vendora Partner"
+              className="w-full h-auto object-cover rounded-2xl shadow-sm"
+              priority
+            />
           </div>
         </div>
 
-        <div className="flex md:flex-row flex-col-reverse space-x-50  mt-10 md:mt-2">
-          <div className="md:w-[60%] w-full mt-4 ml-2 md:mt-0 rounded-4xl">
-            <Image src={venImage2} alt={"alt"} className="w-full h-[140px]  object-cover rounded-4xl" />
+        {/* === Bottom Section === */}
+        <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-10 lg:gap-16">
+          {/* Left Image */}
+          <div className="w-full lg:w-[60%]">
+            <Image
+              src={venImage2}
+              alt="Trusted Network"
+              className="w-full h-[180px] md:h-[250px] lg:h-[280px] xl:h-[320px] object-cover rounded-3xl shadow-sm"
+              priority
+            />
           </div>
-          <div className="md:w-[60%] mr-4 w-full flex flex-col md:space-y-5 space-y-3 items-end">
-            <p className="text-3xl md:text-[45px]  text-center md:text-left text-[#040444] leading-[1.1] md:leading-[39.12px] mt-2 md:mt-0 ">
+
+          {/* Right Text Block */}
+          <div className="w-full lg:w-[50%] flex flex-col items-center md:items-end text-center md:text-right space-y-3 md:space-y-5">
+            <h2 className="text-[#040444] text-3xl md:text-[45px] leading-[1.1] font-semibold">
               Our Trusted Network
-            </p>
-            <p className="text-black md:text-[20px] text-[14px] text-center md:text-end w-full">
+            </h2>
+
+            <p className="text-[#191919] text-[14px] md:text-[20px] leading-relaxed lg:max-w-md text-end">
               Our success is built on trusted partners. Together, we deliver
               quality, innovation, and exceptional spaces on time.
             </p>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

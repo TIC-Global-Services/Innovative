@@ -9,6 +9,8 @@ import Stories from "@/components/Home/Stories"
 import Image from "next/image"
 import MainLayout from "@/components/Layouts/MainLayout"
 import HomeBottomImg from "@/public/footer/Home_Footer.jpg"
+import Bringing from "@/components/Home/Video"
+import VideoAnimation from "@/components/Home/videoAnimation"
 
 export default function Home() {
   return (
@@ -18,8 +20,9 @@ export default function Home() {
     >
       <div className="bg-white overflow-x-hidden mt-40 pb-20">
         <div className="md:px-16 p-5">
-          <VideoScrubber />
+          <VideoAnimation />
           <Clients />
+         
         </div>
         <Production />
         <div className="md:px-16 p-5">

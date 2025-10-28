@@ -15,7 +15,7 @@ const ServicePage = () => {
       title="Our Service"
       description="From concept to completion, we offer end-to-end interior and construction solutions tailored to your needs blending design, functionality, and craftsmanship every step of the way."
     >
-      <div className="md:px-16">
+      <div className="lg:px-16">
         <div className="p-5 mt-20 md:mt-0">
           <OurServices />
           <ServicesSection />

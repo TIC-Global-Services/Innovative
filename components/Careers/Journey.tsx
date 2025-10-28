@@ -44,7 +44,7 @@ const Journey = () => {
       <div className="flex flex-col items-center w-full md:mt-[120px] mt-[50px]">
         <SectionLabel text='OPENINGS'/>
         <div>
-          <p className="font-medium text-3xl md:text-[60px] xl:leading-[69px] text-center text-[#040444] md:w-[884px]">
+          <p className="font-medium text-3xl md:text-[40px] xl:leading-[69px] text-center text-[#040444] md:w-[884px]">
             Start Your Career Journey Here
           </p>
         </div>

@@ -25,7 +25,7 @@ const OurServices = () => {
 
   return (
     <div className="md:mt-52">
-      <div className="flex xl:flex-row flex-col justify-between items-center space-y-5 md:my-[100px] mt-[80px]">
+      <div className="flex xl:flex-row flex-col justify-between items-center space-y-5 lg:my-[100px] mt-[80px]">
         <div className="flex flex-col xl:space-y-2 space-y-5 items-start w-full xl:items-start xl:w-auto">
           <SectionLabel text="OUR SERVICES"/>
           <div>

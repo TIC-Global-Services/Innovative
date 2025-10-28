@@ -65,9 +65,9 @@ const Content = () => {
   }, [])
 
   return (
-    <div className=" mx-auto w-full mt-2">
+    <div className=" mx-auto w-full mt-2 lg:px-0 md:px-5 px-5">
       {/* Vision Section */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 xl:gap-12 mt-10 md:mt-20 lg:mt-72">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 xl:gap-12 mt-10 md:mt-50 lg:mt-72">
         {/* Left Column */}
         <div className="flex flex-col space-y-5 items-start lg:items-start">
           <SectionLabel text="OUR VISION" />

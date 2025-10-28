@@ -43,7 +43,7 @@ const Future = () => {
 
           {/* Text Overlay - Different positioning for mobile vs desktop */}
           <div className="absolute inset-0 flex flex-col md:justify-end justify-start xl:px-5 lg:px-3 px-3 py-1 lg:py-3 xl:py-0">
-            <div className="max-w-[210px] lg:max-w-[320px] xl:max-w-[380px]">
+            <div className="max-w-[210px] md:max-w-[350px] lg:max-w-[320px] xl:max-w-[380px]">
               <h3 className="text-sm sm:text-base md:text-lg lg:text-lg xl:text-2xl font-medium text-[#141414] xl:mb-2 lg:mb-0 mb-1">
                 Interior Turnkey
               </h3>
@@ -64,8 +64,8 @@ const Future = () => {
               alt="Interior"
               className="object-cover w-full h-full"
             />
-            <div className="absolute inset-0 flex flex-col justify-end items-end xl:px-5 lg:px-2 xl:py-2 py-5 md:py-0 px-0">
-              <div className=" max-w-[210px] lg:max-w-[280px] xl:max-w-[380px] text-left">
+            <div className="absolute inset-0 flex flex-col justify-end items-end xl:px-5 lg:px-2 md:px-14 xl:py-2 py-5 md:py-5 px-0">
+              <div className=" max-w-[210px] md:max-w-[280px] lg:max-w-[280px] xl:max-w-[380px] text-left">
                 <h3 className="text-sm sm:text-base md:text-lg lg:text-lg xl:text-2xl font-medium text-[#141414] xl:mb-0 lg:mb-0 mb:1">
                   Furniture
                 </h3>
@@ -84,8 +84,8 @@ const Future = () => {
               alt="Exterior"
               className="object-cover w-full h-full"
             />
-            <div className="absolute inset-0 flex flex-col justify-end xl:px-5 lg:px-5 xl:py-5 lg:py-2 py-4 md:py-0 px-1">
-              <div className=" max-w-[210px] lg:max-w-[280px] xl:max-w-[380px]">
+            <div className="absolute inset-0 flex flex-col justify-end xl:px-5 lg:px-5 md:px-10 xl:py-5 lg:py-2 py-4 md:py-0 px-1">
+              <div className=" max-w-[210px] md:max-w-[280px] lg:max-w-[280px] xl:max-w-[380px]">
                 <h3 className="text-sm sm:text-base md:text-lg lg:text-lg xl:text-2xl font-medium text-[#141414] xl:mb-2 lg:mb-0  mb-1">
                   Civil construction
                 </h3>
