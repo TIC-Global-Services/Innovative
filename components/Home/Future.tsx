@@ -76,6 +76,7 @@ const Future = () => {
               </div>
             </div>
           </div>
+          
 
           {/* Bottom Image - Exterior */}
           <div className="relative rounded-[40px] overflow-hidden h-[48%] min-h-[300px]">
