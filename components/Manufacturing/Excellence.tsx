@@ -142,7 +142,7 @@ useEffect(() => {
         >
           <video
             ref={videoRef}
-            src="\Manufacturer\manufacturing_10mb.mp4"
+            src="/Manufacturer/manufacturing_10mb.mp4"
             className="md:w-[1320px] md:h-[670px] object-cover rounded-xl"
             muted={isMuted}
             loop

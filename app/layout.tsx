@@ -29,7 +29,7 @@ export default function RootLayout({
           <img 
             src="/20.png" 
             alt="Logo" 
-            className="w-30 h-30 " 
+            className="md:w-30 md:h-30 h-20 w-20 " 
           />
         </div>
       </body>
