@@ -31,7 +31,6 @@ const OurServices = () => {
           <div>
             <p className="font-semibold text-3xl xl:text-[45px] xl:leading-[59px] xl:text-start text-start text-[#040444] 2xl:w-[884px] xl:w-[500px]">
               Empowering You <br className="hidden md:block xl:block" /> with Our Services
-
             </p>
           </div>
         </div>
